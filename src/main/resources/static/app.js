@@ -34,7 +34,7 @@ movieForm.addEventListener("submit", function(event) {
     };
 
     fetch("/api/movies", {
-        method: "POST",
+        method: "POST"  ,
         headers: {
             "Content-Type": "application/json"
         },
