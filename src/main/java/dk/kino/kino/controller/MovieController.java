@@ -2,27 +2,29 @@ package dk.kino.kino.controller;
 
 import dk.kino.kino.model.Movie;
 import dk.kino.kino.repository.MovieRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/movies")
 public class MovieController {
 
-    private final MovieRepository movieRepository;
+    @Autowired
+    MovieRepository movieRepository;
 
-    public MovieController(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
-    }
-
-    @GetMapping
+    @GetMapping("/movies")
     public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+        List<Movie> movies = movieRepository.findAll();
+        return movies;
     }
 
-    @PostMapping
-    public Movie createMovie(@RequestBody Movie movie) {
+    @PostMapping("/addmovie")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Movie addMovie(@RequestBody Movie movie){
         return movieRepository.save(movie);
     }
+
+
 }
