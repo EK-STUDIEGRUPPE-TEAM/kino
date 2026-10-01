@@ -19,6 +19,11 @@ public class MovieController {
         return movieService.getAllMovies();
     }
 
+    @GetMapping("/movies/{id}")
+    public Movie getMovie(@PathVariable Long id) {
+        return movieService.getMovie(id);
+    }
+
     @PostMapping("/addMovie")
     @ResponseStatus(HttpStatus.CREATED)
     public Movie addMovie(@RequestBody Movie movie){
