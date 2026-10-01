@@ -1,9 +1,6 @@
 package dk.kino.kino.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Movie {
@@ -13,20 +10,18 @@ public class Movie {
     private Long id;
 
     private String title;
-    private String genre;
+
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
     private int ageLimit;
-
-    public Movie() {
-    }
-
-    public Movie(String title, String genre, int ageLimit) {
-        this.title = title;
-        this.genre = genre;
-        this.ageLimit = ageLimit;
-    }
+    private int duration;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -37,11 +32,11 @@ public class Movie {
         this.title = title;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 
@@ -51,5 +46,13 @@ public class Movie {
 
     public void setAgeLimit(int ageLimit) {
         this.ageLimit = ageLimit;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }
