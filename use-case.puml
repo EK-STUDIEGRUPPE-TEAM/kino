@@ -1,0 +1,23 @@
+@startuml
+
+left to right direction
+
+actor Medarbejder
+
+rectangle "Kino-system" {
+    usecase "Opret reservation" as UC1
+    usecase "Se reservationer" as UC2
+    usecase "Sælg billet" as UC3
+    usecase "Planlæg forestilling" as UC4
+    usecase "Ændr forestilling" as UC5
+    usecase "Fjern forestilling" as UC6
+}
+
+Medarbejder --> UC1
+Medarbejder --> UC2
+Medarbejder --> UC3
+Medarbejder --> UC4
+Medarbejder --> UC5
+Medarbejder --> UC6
+
+@enduml

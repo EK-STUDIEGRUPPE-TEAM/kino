@@ -1,0 +1,63 @@
+@startuml
+
+hide methods
+hide stereotypes
+
+entity Movie {
+  * id : Long <<PK>>
+  --
+  title : String
+  genre : String
+  age_limit : int
+  duration : int
+}
+
+entity Showing {
+  * id : Long <<PK>>
+  --
+  date_time : LocalDateTime
+  movie_id : Long <<FK>>
+  theatre_id : Long <<FK>>
+}
+
+entity Theatre {
+  * id : Long <<PK>>
+  --
+  name : String
+}
+
+entity Reservation {
+  * id : Long <<PK>>
+  --
+  customer_name : String
+  phone : String
+  showing_id : Long <<FK>>
+}
+
+entity Seat {
+  * id : Long <<PK>>
+  --
+  seat_row : int
+  seat_number : int
+  theatre_id : Long <<FK>>
+}
+
+entity ReservationSeat {
+  * id : Long <<PK>>
+  --
+  reservation_id : Long <<FK>>
+  seat_id : Long <<FK>>
+  showing_id : Long <<FK>>
+}
+
+Movie ||--o{ Showing
+Theatre ||--o{ Showing
+
+Showing ||--o{ Reservation
+Theatre ||--|{ Seat
+
+Reservation ||--|{ ReservationSeat
+Seat ||--o{ ReservationSeat
+Showing ||--o{ ReservationSeat
+
+@enduml
