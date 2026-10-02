@@ -1,115 +1,59 @@
 package dk.kino.kino.controller;
 
 import dk.kino.kino.model.Showing;
-import dk.kino.kino.repository.MovieRepository;
-import dk.kino.kino.repository.ShowingRepository;
-import dk.kino.kino.repository.TheatreRepository;
-import org.springframework.http.ResponseEntity;
-import dk.kino.kino.model.Movie;
-import dk.kino.kino.model.Theatre;
+import dk.kino.kino.service.ShowingService;
+
 import org.springframework.http.HttpStatus;
-
-import java.util.Optional;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
-@RequestMapping ( "/api/showings" )
+@RequestMapping("/api/showings")
 public class ShowingController {
 
-    private final ShowingRepository showingRepository;
-    private final MovieRepository movieRepository;
-    private final TheatreRepository theatreRepository;
+    private final ShowingService showingService;
 
-    // dependency injection
-    public ShowingController( ShowingRepository showingRepository , MovieRepository movieRepository , TheatreRepository theatreRepository ) {
 
-        this.showingRepository = showingRepository; //gemmer nye forestillinger
-        this.movieRepository = movieRepository; // finder filmene
-        this.theatreRepository = theatreRepository; // finder biografsalen for forestillingen
-
+    // Dependency injection
+    public ShowingController(ShowingService showingService) {
+        this.showingService = showingService;
     }
 
+
+    // Opretter en forestilling
     @PostMapping
-    public ResponseEntity < Showing > createShowing(@RequestBody Showing request) {
+    public ResponseEntity<Showing> createShowing(
+            @RequestBody Showing request) {
 
-        Optional <Movie> movie =
-                movieRepository.findById(request.getMovie().getId());
-
-        Optional <Theatre> theatre =
-                theatreRepository.findById(request.getTheatre().getId());
-
-        if (movie.isEmpty() || theatre.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-
-        }
-
-        Showing showing = new Showing(
-                request.getDateTime() ,
-                movie.get() ,
-                theatre.get()
-        );
-
-        Showing savedShowing = showingRepository.save(showing);
+        Showing savedShowing =
+                showingService.createShowing(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(savedShowing);
     }
 
+
+    // Redigerer en eksisterende forestilling
     @PutMapping("/{id}")
     public ResponseEntity<Showing> updateShowing(
             @PathVariable Long id,
             @RequestBody Showing request) {
 
-        Optional < Showing > existingShowing =
-                showingRepository.findById(id);
+        Showing updatedShowing =
+                showingService.updateShowing(id, request);
 
-        if ( existingShowing.isEmpty() ) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Optional < Movie > movie =
-                movieRepository.findById(request.getMovie().getId());
-
-        Optional < Theatre > theatre =
-                theatreRepository.findById(request.getTheatre().getId());
-
-        if ( movie.isEmpty() || theatre.isEmpty() ) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        Showing showing = existingShowing.get();
-
-        showing.setDateTime(request.getDateTime());
-        showing.setMovie(movie.get());
-        showing.setTheatre(theatre.get());
-
-        Showing savedShowing = showingRepository.save(showing);
-
-        return ResponseEntity.ok(savedShowing);
-
+        return ResponseEntity.ok(updatedShowing);
     }
 
+
+    // Sletter en eksisterende forestilling
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteShowing(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteShowing(
+            @PathVariable Long id) {
 
-        Optional<Showing> existingShowing =
-                showingRepository.findById(id);
-
-        if (existingShowing.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        showingRepository.delete(existingShowing.get());
+        showingService.deleteShowing(id);
 
         return ResponseEntity.noContent().build();
-
-
     }
 }
-
-
-
-
