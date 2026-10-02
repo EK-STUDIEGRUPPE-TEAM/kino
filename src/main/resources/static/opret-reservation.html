@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret reservation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Kino</h1>
+<a href="index.html">Film</a> | <a href="reservations.html">Reservationer</a> | <strong>Opret reservation</strong>
+
+<h2>Opret reservation</h2>
+
+<form id="reservation-form">
+    <label for="showing">1. Vælg film og forestilling</label>
+    <select id="showing" required>
+        <option value="">Henter forestillinger...</option>
+    </select>
+
+    <p>2. Vælg sæde(r)</p>
+    <div id="seat-map"><p class="empty-message">Vælg en forestilling først.</p></div>
+    <p id="selected-seats">Valgte sæder: ingen</p>
+
+    <p>3. Dine oplysninger</p>
+    <input id="customerName" type="text" placeholder="Navn" required>
+    <input id="phone" type="tel" placeholder="Telefonnummer" required>
+
+    <button type="submit">Opret reservation</button>
+</form>
+
+<div id="reservation-message"></div>
+
+<script src="opret-reservation.js"></script>
+
+</body>
+</html>
