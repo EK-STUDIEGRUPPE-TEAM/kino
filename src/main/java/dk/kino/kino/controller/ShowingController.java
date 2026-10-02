@@ -1,6 +1,5 @@
 package dk.kino.kino.controller;
 
-import dk.kino.kino.dto.CreateShowingRequest;
 import dk.kino.kino.model.Showing;
 import dk.kino.kino.repository.MovieRepository;
 import dk.kino.kino.repository.ShowingRepository;
@@ -40,15 +39,15 @@ public class ShowingController {
     }
 
     @PostMapping
-    public ResponseEntity < Showing > createShowing( @RequestBody CreateShowingRequest request ) {
+    public ResponseEntity < Showing > createShowing(@RequestBody Showing request) {
 
-        Optional < Movie > movie =
-                movieRepository.findById(request.getMovieId());
+        Optional <Movie> movie =
+                movieRepository.findById(request.getMovie().getId());
 
-        Optional < Theatre > theatre =
-                theatreRepository.findById(request.getTheatreId());
+        Optional <Theatre> theatre =
+                theatreRepository.findById(request.getTheatre().getId());
 
-        if ( movie.isEmpty() || theatre.isEmpty() ) {
+        if (movie.isEmpty() || theatre.isEmpty()) {
             return ResponseEntity.badRequest().build();
 
         }
@@ -65,7 +64,59 @@ public class ShowingController {
                 .status(HttpStatus.CREATED)
                 .body(savedShowing);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Showing> updateShowing(
+            @PathVariable Long id,
+            @RequestBody Showing request) {
+
+        Optional < Showing > existingShowing =
+                showingRepository.findById(id);
+
+        if ( existingShowing.isEmpty() ) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional < Movie > movie =
+                movieRepository.findById(request.getMovie().getId());
+
+        Optional < Theatre > theatre =
+                theatreRepository.findById(request.getTheatre().getId());
+
+        if ( movie.isEmpty() || theatre.isEmpty() ) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Showing showing = existingShowing.get();
+
+        showing.setDateTime(request.getDateTime());
+        showing.setMovie(movie.get());
+        showing.setTheatre(theatre.get());
+
+        Showing savedShowing = showingRepository.save(showing);
+
+        return ResponseEntity.ok(savedShowing);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteShowing(@PathVariable Long id) {
+
+        Optional<Showing> existingShowing =
+                showingRepository.findById(id);
+
+        if (existingShowing.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        showingRepository.delete(existingShowing.get());
+
+        return ResponseEntity.noContent().build();
+
+
+    }
 }
+
 
 
 
