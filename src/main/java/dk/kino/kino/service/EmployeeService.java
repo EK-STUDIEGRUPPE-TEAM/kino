@@ -1,5 +1,6 @@
 package dk.kino.kino.service;
 
+import dk.kino.kino.exception.NotFoundException;
 import dk.kino.kino.model.Employee;
 import dk.kino.kino.model.EmployeeType;
 import dk.kino.kino.repository.EmployeeRepository;
@@ -34,7 +35,7 @@ public class EmployeeService {
 
         Employee existingEmployee = employeeRepository.findById(id).
                 orElseThrow(() ->
-                        new RuntimeException("Employee not found"));
+                        new NotFoundException("Employee with id " + id + " not found"));
 
         existingEmployee.setName(newEmployee.getName());
         existingEmployee.setType(newEmployee.getType());
@@ -47,7 +48,7 @@ public class EmployeeService {
 
         Employee employee = employeeRepository.findById(id).
                 orElseThrow(() ->
-                        new RuntimeException("Employee not found"));
+                        new NotFoundException("Employee with id " + id + " not found"));
 
         employeeRepository.delete(employee);
     }
