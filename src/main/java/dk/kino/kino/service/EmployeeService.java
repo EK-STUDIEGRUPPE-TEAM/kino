@@ -35,7 +35,7 @@ public class EmployeeService {
 
         Employee existingEmployee = employeeRepository.findById(id).
                 orElseThrow(() ->
-                        new NotFoundException("Employee not found"));
+                        new NotFoundException("Employee with id " + id + " not found"));
 
         existingEmployee.setName(newEmployee.getName());
         existingEmployee.setType(newEmployee.getType());
@@ -48,7 +48,7 @@ public class EmployeeService {
 
         Employee employee = employeeRepository.findById(id).
                 orElseThrow(() ->
-                        new NotFoundException("Employee not found"));
+                        new NotFoundException("Employee with id " + id + " not found"));
 
         employeeRepository.delete(employee);
     }
