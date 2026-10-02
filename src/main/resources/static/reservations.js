@@ -21,24 +21,39 @@ function getReservations() {
                 return;
             }
 
-            reservations.forEach(reservation => {
+            const grouped = {};
+            reservations.forEach(reservationSeat => {
+                const reservation = reservationSeat.reservation;
+                if (!grouped[reservation.id]) {
+                    grouped[reservation.id] = {
+                        reservation: reservation,
+                        seats: []
+                    };
+                }
+                grouped[reservation.id].seats.push(reservationSeat.seat);
+            });
+
+            Object.values(grouped).forEach(({ reservation, seats }) => {
+                const showing = reservation.showing;
                 const reservationElement = document.createElement("div");
                 reservationElement.className = "reservation";
 
-                const seats = reservation.seats.length > 0
-                    ? reservation.seats.map(seat => `<li>${seat}</li>`).join("")
-                    : "<li>Ingen sæder tilknyttet</li>";
+                const seatItems = seats
+                    .sort((a, b) => a.rowNumber - b.rowNumber || a.seatNumber - b.seatNumber)
+                    .map(seat => `<li>Række ${seat.rowNumber}, sæde ${seat.seatNumber}</li>`)
+                    .join("");
 
                 reservationElement.innerHTML = `
                     <h3>${reservation.customerName}</h3>
                     <p>Telefon: ${reservation.phone}</p>
-                    <p>Forestilling: ${reservation.movieTitle ?? "Ukendt film"} – ${reservation.theatreName ?? ""}, ${formatDateTime(reservation.showingDateTime)}</p>
+                    <p>Forestilling: ${showing.movie.title} – ${showing.theatre.name}, ${formatDateTime(showing.dateTime)}</p>
                     <p>Sæder:</p>
-                    <ul>${seats}</ul>
+                    <ul>${seatItems}</ul>
                 `;
 
                 reservationList.appendChild(reservationElement);
             });
+
         })
         .catch(error => {
             console.error("Fejl ved hentning af reservationer:", error);

@@ -9,4 +9,5 @@ public interface ReservationSeatRepository
         extends JpaRepository<ReservationSeat, Long> {
 
     List<ReservationSeat> findByReservationId(Long reservationId);
+    List<ReservationSeat> findByReservationShowingId(Long showingId);
 }
