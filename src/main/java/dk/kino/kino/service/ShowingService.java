@@ -8,6 +8,8 @@ import dk.kino.kino.repository.ShowingRepository;
 import dk.kino.kino.repository.TheatreRepository;
 import org.springframework.stereotype.Service;
 import dk.kino.kino.exception.NotFoundException;
+import java.util.List;
+
 
 
 @Service
@@ -26,6 +28,11 @@ public class ShowingService {
         this.movieRepository = movieRepository;
         this.theatreRepository = theatreRepository;
     }
+
+    public List<Showing> getAllShowings() {
+        return showingRepository.findAll();
+    }
+
 
     public Showing createShowing(Showing request) {
 
