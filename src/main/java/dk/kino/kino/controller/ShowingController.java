@@ -27,6 +27,11 @@ public class ShowingController {
         return showingService.getAllShowings();
     }
 
+    @GetMapping("/upcoming")
+    public List<Showing> getUpcomingShowings(){
+        return showingService.getUpcomingShowings();
+    }
+
 
     // Opretter en forestilling
     @PostMapping

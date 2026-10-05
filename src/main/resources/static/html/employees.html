@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <title>Employees</title>
-    <link rel="stylesheet" href="employee.css">
+    <link rel="stylesheet" href="/css/employee.css">
 </head>
 <body>
 
@@ -18,11 +18,11 @@
 
         <nav>
             <a href="#">Dashboard</a>
-            <a href="#">Film</a>
-            <a href="#">Forestillinger</a>
-            <a href="#">Reservationer</a>
+            <a href="index.html">Film</a>
+            <a href="upcoming-showings.html" class="active">Forestillinger</a>
+            <a href="reservations.html">Reservationer</a>
             <a href="#">Salg</a>
-            <a href="#" class="active">Employees</a>
+            <a href="employees.html">Employees</a>
         </nav>
 
     </aside>
@@ -32,20 +32,20 @@
 
         <div class="page-header">
             <div>
-                <h1>Employees</h1>
-                <p>Manage cinema employees</p>
+                <h1>Medarbejder</h1>
+                <p>Manage cinema medarbejder</p>
             </div>
         </div>
 
 
         <section class="employee-card">
 
-            <h2 id="employee-form-title">Add Employee</h2>
+            <h2 id="employee-form-title">Opret Medarbejder</h2>
 
             <form id="employee-form">
 
                 <div class="form-group">
-                    <label for="employee-name">Name</label>
+                    <label for="employee-name">Navn</label>
                     <input
                             id="employee-name"
                             type="text"
@@ -55,12 +55,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="employee-type">Role</label>
+                    <label for="employee-type">Rolle</label>
 
                     <select id="employee-type">
-                        <option value="SALES">Sales</option>
-                        <option value="MOVIE_OPERATOR">Movie Operator</option>
-                        <option value="TICKET_INSPECTOR">Ticket Inspector</option>
+                        <option value="SALES">Salg</option>
+                        <option value="MOVIE_OPERATOR">Film Operatør</option>
+                        <option value="TICKET_INSPECTOR">Bilet kontrollør</option>
                     </select>
                 </div>
 
@@ -70,7 +70,7 @@
                             id="submit-employee-button"
                             class="primary-button"
                             type="submit">
-                        Add New Employee
+                        Opret Ny Medarbejder
                     </button>
 
                     <button
@@ -78,7 +78,7 @@
                             class="secondary-button"
                             type="button"
                             hidden>
-                        Cancel Edit
+                        Fortryd Edit
                     </button>
 
                 </div>
@@ -90,15 +90,15 @@
 
         <section class="employee-card">
 
-            <h2>Employees</h2>
+            <h2>Medarbejdere</h2>
 
             <table id="employee-table">
 
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Role</th>
+                    <th>Navn</th>
+                    <th>Rolle</th>
                     <th>Handling</th>
                 </tr>
                 </thead>
@@ -114,7 +114,7 @@
 
 </div>
 
-<script src="employee.js?v=2"></script>
+<script src="/js/employee.js?v=2"></script>
 
 </body>
 </html>

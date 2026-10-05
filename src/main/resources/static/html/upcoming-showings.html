@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Upcoming Showings</title>
+  <link rel="stylesheet" href="/css/upcoming-showings.css">
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      KINO
+      <span>Admin</span>
+    </div>
+
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="index.html">Film</a>
+      <a href="upcoming-showings.html" class="active">Forestillinger</a>
+      <a href="reservations.html">Reservationer</a>
+      <a href="#">Salg</a>
+      <a href="employees.html">Employees</a>
+    </nav>
+
+  </aside>
+
+
+  <!-- Main content -->
+
+  <main class="main-content">
+
+    <div class="page-header">
+
+      <div>
+        <h1>Upcoming Showings</h1>
+
+        <p>
+          Cinema program for the next 2 weeks
+        </p>
+      </div>
+
+    </div>
+
+
+    <section class="showing-card">
+
+      <h2>Upcoming Showings</h2>
+
+
+      <table id="showing-table">
+
+        <thead>
+
+        <tr>
+          <th>Movie</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Theatre</th>
+        </tr>
+
+        </thead>
+
+
+        <tbody id="showing-table-body">
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script src="/js/upcoming-showings.js"></script>
+
+</body>
+</html>
