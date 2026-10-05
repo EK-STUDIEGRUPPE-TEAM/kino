@@ -81,8 +81,7 @@ function getEmployees() {
 
                 roleBadge.classList.add("role-badge");
 
-                roleBadge.textContent =
-                    employee.type.replaceAll("_", " ");
+                roleBadge.textContent = formatEmployeeType(employee.type);
 
                 typeCell.appendChild(roleBadge);
 
@@ -331,6 +330,24 @@ cancelEditButton.addEventListener("click", function () {
 
 employeeForm.addEventListener("submit", addEmployee);
 
+
+/* ---------- FORMAT TYPE ---------- */
+function formatEmployeeType(type) {
+
+    if (type === "SALES") {
+        return "Sales";
+    }
+
+    if (type === "MOVIE_OPERATOR") {
+        return "Movie Operator";
+    }
+
+    if (type === "TICKET_INSPECTOR") {
+        return "Ticket Inspector";
+    }
+
+    return type;
+}
 
 /* ---------- LOAD EMPLOYEES ---------- */
 
