@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="da">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Upcoming Showings</title>
+  <meta charset="UTF-8">
+  <title>Upcoming Showings</title>
   <link rel="stylesheet" href="/css/upcoming-showings.css">
 </head>
+
 <body>
 
 <div class="admin-layout">
 
-  <!-- Sidebar -->
-
+  -- Sidebar --
   <aside class="sidebar">
 
     <div class="logo">
@@ -30,8 +31,7 @@
   </aside>
 
 
-  <!-- Main content -->
-
+  -- Main content --
   <main class="main-content">
 
     <div class="page-header">
@@ -47,27 +47,63 @@
     </div>
 
 
+    -- Opret forestilling --
+    <section class="showing-card">
+
+      <h2>Opret forestilling</h2>
+
+      <form id="showing-form">
+
+        <label for="movie-id">Film</label>
+        <select id="movie-id" required>
+          <option value="">Vælg film</option>
+        </select>
+
+        <label for="theatre-id">Sal</label>
+        <select id="theatre-id" required>
+          <option value="">Vælg sal</option>
+        </select>
+
+        <label for="showing-date-time">
+          Dato og tidspunkt
+        </label>
+
+        <input
+                id="showing-date-time"
+                type="datetime-local"
+                required
+        >
+
+        <button type="submit">
+          Opret forestilling
+        </button>
+
+      </form>
+
+    </section>
+
+
+    -- Liste over forestillinger --
     <section class="showing-card">
 
       <h2>Upcoming Showings</h2>
-
 
       <table id="showing-table">
 
         <thead>
 
         <tr>
-          <th>Movie</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Theatre</th>
-        </tr>
+    <th>Film</th>
+    <th>Dato</th>
+    <th>Tid</th>
+    <th>Sal</th>
+    <th>Handlinger</th>
+</tr>
 
         </thead>
 
 
         <tbody id="showing-table-body">
-
         </tbody>
 
       </table>
@@ -77,6 +113,7 @@
   </main>
 
 </div>
+
 
 <script src="/js/upcoming-showings.js"></script>
 
