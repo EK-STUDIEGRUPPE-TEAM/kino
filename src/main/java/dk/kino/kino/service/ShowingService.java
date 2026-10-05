@@ -8,6 +8,8 @@ import dk.kino.kino.repository.ShowingRepository;
 import dk.kino.kino.repository.TheatreRepository;
 import org.springframework.stereotype.Service;
 import dk.kino.kino.exception.NotFoundException;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -34,6 +36,8 @@ public class ShowingService {
     }
 
 
+
+
     public Showing createShowing(Showing request) {
 
         Movie movie = movieRepository
@@ -53,6 +57,13 @@ public class ShowingService {
         );
 
         return showingRepository.save(showing);
+    }
+
+    public List<Showing> getUpcomingShowings(){
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = start.plusWeeks(2);
+
+        return showingRepository.findByDateTimeBetweenOrderByDateTimeAsc(start, end);
     }
 
     public Showing updateShowing(Long id, Showing request) {
