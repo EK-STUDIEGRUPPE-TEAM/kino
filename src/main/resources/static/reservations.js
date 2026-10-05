@@ -48,8 +48,13 @@ function getReservations() {
                     <p>Telefon: ${reservation.phone}</p>
                     <p>Forestilling: ${showing.movie.title} – ${showing.theatre.name}, ${formatDateTime(showing.dateTime)}</p>
                     <p>Sæder:</p>
-                    <ul>${seatItems}</ul>
+                                    <ul>${seatItems}</ul>
+                    <button class="cancel-button">Annuller reservation</button>
                 `;
+
+                reservationElement.querySelector(".cancel-button")
+                    .addEventListener("click", () => cancelReservation(reservation));
+
 
                 reservationList.appendChild(reservationElement);
             });
@@ -60,5 +65,23 @@ function getReservations() {
             reservationList.innerHTML = `<p class="empty-message">Kunne ikke hente reservationer.</p>`;
         });
 }
+function cancelReservation(reservation) {
+    if (!confirm(`Vil du annullere reservationen for ${reservation.customerName}?`)) {
+        return;
+    }
+
+    fetch(`/api/reservations/${reservation.id}`, { method: "DELETE" })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Status " + response.status);
+            }
+            getReservations();
+        })
+        .catch(error => {
+            console.error("Fejl ved annullering af reservation:", error);
+            alert("Reservationen kunne ikke annulleres.");
+        });
+}
+
 
 getReservations();

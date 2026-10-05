@@ -12,6 +12,8 @@ import dk.kino.kino.repository.ReservationRepository;
 import dk.kino.kino.repository.SeatRepository;
 import dk.kino.kino.repository.ShowingRepository;
 import org.springframework.transaction.annotation.Transactional;
+import dk.kino.kino.exception.NotFoundException;
+
 
 
 
@@ -92,5 +94,15 @@ public class ReservationService {
 
         return savedReservation;
     }
+    @Transactional
+    public void cancelReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Reservationen blev ikke fundet"));
+
+        // Sæderne skal slettes først, fordi de peger på reservationen
+        reservationSeatRepository.deleteAll(reservationSeatRepository.findByReservationId(reservation.getId()));
+        reservationRepository.delete(reservation);
+    }
+
 
 }

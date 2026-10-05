@@ -89,3 +89,11 @@ body {
     background-color: #ffebee;
     border: 1px solid #c62828;
 }
+.cancel-button {
+    padding: 6px 12px;
+    background-color: #c62828;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
