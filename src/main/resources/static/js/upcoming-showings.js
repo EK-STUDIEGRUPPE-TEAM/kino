@@ -192,7 +192,7 @@ function getUpcomingShowings() {
 // Henter film til dropdown
 function getMovies() {
 
-    fetch("/movies")
+    fetch("/api/movies")
         .then(response => {
 
             if (!response.ok) {
