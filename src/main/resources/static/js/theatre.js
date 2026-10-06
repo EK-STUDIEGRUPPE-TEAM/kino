@@ -17,7 +17,6 @@ const theatreTableBody =
 let theatreIdToEdit = null;
 
 
-/* ---------- GET THEATRES ---------- */
 
 function getTheatres() {
 
@@ -52,25 +51,25 @@ function getTheatres() {
                 const row = theatreTableBody.insertRow();
 
 
-                /* ID */
+
 
                 const idCell = row.insertCell();
                 idCell.textContent = theatre.id;
 
 
-                /* Name */
+
 
                 const nameCell = row.insertCell();
                 nameCell.textContent = theatre.name;
 
 
-                /* Number of rows */
+
 
                 const rowsCell = row.insertCell();
                 rowsCell.textContent = theatre.numberOfRows;
 
 
-                /* Seats per row */
+
 
                 const seatsCell = row.insertCell();
                 seatsCell.textContent = theatre.seatsPerRow;
@@ -95,7 +94,6 @@ function getTheatres() {
                 });
 
 
-                /* ---------- EDIT BUTTON ---------- */
 
                 const editButton = document.createElement("button");
 
@@ -128,7 +126,7 @@ function getTheatres() {
                 });
 
 
-                /* ---------- DELETE BUTTON ---------- */
+
 
                 const deleteButton = document.createElement("button");
 
@@ -143,7 +141,6 @@ function getTheatres() {
                 });
 
 
-                /* ---------- ADD BUTTONS ---------- */
 
                 handlingCell.appendChild(viewButton);
                 handlingCell.appendChild(editButton);
@@ -160,7 +157,6 @@ function getTheatres() {
 }
 
 
-/* ---------- CREATE THEATRE ---------- */
 
 function addTheatre(event) {
 
@@ -178,7 +174,6 @@ function addTheatre(event) {
     };
 
 
-    /* If a theatre is being edited */
 
     if (theatreIdToEdit !== null) {
 
@@ -187,8 +182,6 @@ function addTheatre(event) {
         return;
     }
 
-
-    /* Otherwise create a new theatre */
 
     fetch("/api/theatres/add", {
 
@@ -225,7 +218,7 @@ function addTheatre(event) {
 }
 
 
-/* ---------- UPDATE THEATRE ---------- */
+
 
 function updateTheatre(id, theatre) {
 
@@ -264,7 +257,7 @@ function updateTheatre(id, theatre) {
 }
 
 
-/* ---------- DELETE THEATRE ---------- */
+
 
 function deleteTheatre(id) {
 
@@ -298,7 +291,6 @@ function deleteTheatre(id) {
 }
 
 
-/* ---------- RESET FORM ---------- */
 
 function resetTheatreForm() {
 
@@ -321,11 +313,11 @@ function resetTheatreForm() {
 }
 
 
-/* ---------- EVENTS ---------- */
+
 
 theatreForm.addEventListener("submit", addTheatre);
 
 
-/* ---------- LOAD THEATRES ---------- */
+
 
 getTheatres();
