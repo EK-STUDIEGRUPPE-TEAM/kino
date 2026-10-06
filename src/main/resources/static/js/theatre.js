@@ -17,7 +17,6 @@ const theatreTableBody =
 let theatreIdToEdit = null;
 
 
-/* ---------- GET THEATRES ---------- */
 
 function getTheatres() {
 
@@ -95,7 +94,6 @@ function getTheatres() {
                 });
 
 
-                /* ---------- EDIT BUTTON ---------- */
 
                 const editButton = document.createElement("button");
 
@@ -128,7 +126,6 @@ function getTheatres() {
                 });
 
 
-                /* ---------- DELETE BUTTON ---------- */
 
                 const deleteButton = document.createElement("button");
 
@@ -143,7 +140,6 @@ function getTheatres() {
                 });
 
 
-                /* ---------- ADD BUTTONS ---------- */
 
                 handlingCell.appendChild(viewButton);
                 handlingCell.appendChild(editButton);
@@ -160,7 +156,6 @@ function getTheatres() {
 }
 
 
-/* ---------- CREATE THEATRE ---------- */
 
 function addTheatre(event) {
 
@@ -178,7 +173,6 @@ function addTheatre(event) {
     };
 
 
-    /* If a theatre is being edited */
 
     if (theatreIdToEdit !== null) {
 
@@ -188,7 +182,6 @@ function addTheatre(event) {
     }
 
 
-    /* Otherwise create a new theatre */
 
     fetch("/api/theatres/add", {
 
@@ -225,7 +218,6 @@ function addTheatre(event) {
 }
 
 
-/* ---------- UPDATE THEATRE ---------- */
 
 function updateTheatre(id, theatre) {
 
@@ -264,8 +256,6 @@ function updateTheatre(id, theatre) {
 }
 
 
-/* ---------- DELETE THEATRE ---------- */
-
 function deleteTheatre(id) {
 
     fetch("/api/theatres/delete/" + id, {
@@ -298,7 +288,6 @@ function deleteTheatre(id) {
 }
 
 
-/* ---------- RESET FORM ---------- */
 
 function resetTheatreForm() {
 
@@ -321,11 +310,10 @@ function resetTheatreForm() {
 }
 
 
-/* ---------- EVENTS ---------- */
+
 
 theatreForm.addEventListener("submit", addTheatre);
 
 
-/* ---------- LOAD THEATRES ---------- */
 
 getTheatres();
