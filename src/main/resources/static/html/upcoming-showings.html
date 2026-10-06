@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Upcoming Showings</title>
+  <title>Forestillinger</title>
   <link rel="stylesheet" href="/css/upcoming-showings.css">
 </head>
 
@@ -11,7 +11,6 @@
 
 <div class="admin-layout">
 
-  -- Sidebar --
   <aside class="sidebar">
 
     <div class="logo">
@@ -31,79 +30,121 @@
   </aside>
 
 
-  -- Main content --
   <main class="main-content">
 
     <div class="page-header">
-
       <div>
-        <h1>Upcoming Showings</h1>
-
-        <p>
-          Cinema program for the next 2 weeks
-        </p>
+        <h1>Forestillinger</h1>
+        <p>Administrer biografens forestillinger</p>
       </div>
-
     </div>
 
 
-    -- Opret forestilling --
+    <!-- Opret / redigér forestilling -->
     <section class="showing-card">
 
       <h2>Opret forestilling</h2>
 
       <form id="showing-form">
 
-        <label for="movie-id">Film</label>
-        <select id="movie-id" required>
-          <option value="">Vælg film</option>
-        </select>
+        <div class="form-group">
 
-        <label for="theatre-id">Sal</label>
-        <select id="theatre-id" required>
-          <option value="">Vælg sal</option>
-        </select>
+          <label for="movie-id">Film</label>
 
-        <label for="showing-date-time">
-          Dato og tidspunkt
-        </label>
+          <select id="movie-id" required>
+            <option value="">Vælg film</option>
+          </select>
 
-        <input
-                id="showing-date-time"
-                type="datetime-local"
-                required
-        >
+        </div>
 
-        <button type="submit">
-          Opret forestilling
-        </button>
+
+        <div class="form-group">
+
+          <label for="theatre-id">Sal</label>
+
+          <select id="theatre-id" required>
+            <option value="">Vælg sal</option>
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="showing-date-time">
+            Dato og tidspunkt
+          </label>
+
+          <input
+                  id="showing-date-time"
+                  type="datetime-local"
+                  required
+          >
+
+        </div>
+
+
+        <div class="form-buttons">
+
+          <button
+                  class="primary-button"
+                  type="submit">
+            Opret forestilling
+          </button>
+
+        </div>
 
       </form>
 
     </section>
 
 
-    -- Liste over forestillinger --
+    <!-- Alle forestillinger -->
     <section class="showing-card">
 
-      <h2>Upcoming Showings</h2>
+      <h2>Alle forestillinger</h2>
 
-      <table id="showing-table">
+      <table class="showing-table">
 
         <thead>
-
         <tr>
-    <th>Film</th>
-    <th>Dato</th>
-    <th>Tid</th>
-    <th>Sal</th>
-    <th>Handlinger</th>
-</tr>
-
+          <th>Film</th>
+          <th>Dato</th>
+          <th>Tid</th>
+          <th>Sal</th>
+          <th>Handlinger</th>
+        </tr>
         </thead>
 
-
         <tbody id="showing-table-body">
+        </tbody>
+
+      </table>
+
+    </section>
+
+
+    <!-- Kommende forestillinger -->
+    <section class="showing-card">
+
+      <h2>Kommende forestillinger</h2>
+
+      <p class="section-description">
+        Biografprogram for de næste 2 uger
+      </p>
+
+      <table class="showing-table">
+
+        <thead>
+        <tr>
+          <th>Film</th>
+          <th>Dato</th>
+          <th>Tid</th>
+          <th>Sal</th>
+        </tr>
+        </thead>
+
+        <tbody id="upcoming-showing-table-body">
         </tbody>
 
       </table>

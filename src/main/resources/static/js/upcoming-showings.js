@@ -1,13 +1,19 @@
-const showingTableBody = document.getElementById("showing-table-body");
-const showingForm = document.getElementById("showing-form");
+const showingTableBody =
+    document.getElementById("showing-table-body");
+
+const upcomingShowingTableBody =
+    document.getElementById("upcoming-showing-table-body");
+
+const showingForm =
+    document.getElementById("showing-form");
 
 let editingShowingId = null;
 
 
-// Henter kommende forestillinger
-function getUpcomingShowings() {
+// Henter alle forestillinger
+function getShowings() {
 
-    fetch("/api/showings/upcoming")
+    fetch("/api/showings")
         .then(response => {
 
             if (!response.ok) {
@@ -26,7 +32,7 @@ function getUpcomingShowings() {
                 const cell = row.insertCell();
 
                 cell.colSpan = 5;
-                cell.textContent = "Ingen kommende forestillinger";
+                cell.textContent = "Ingen forestillinger";
 
                 return;
             }
@@ -38,7 +44,8 @@ function getUpcomingShowings() {
 
                 // Film
                 const movieCell = row.insertCell();
-                movieCell.textContent = showing.movie.title;
+                movieCell.textContent =
+                    showing.movie.title;
 
 
                 // Dato
@@ -61,30 +68,41 @@ function getUpcomingShowings() {
 
                 // Handlinger
                 const actionCell = row.insertCell();
+                actionCell.className = "action-cell";
 
 
-                // Redigér-knap
-                const editButton = document.createElement("button");
+                // Redigér
+                const editButton =
+                    document.createElement("button");
 
                 editButton.type = "button";
                 editButton.textContent = "Redigér";
+                editButton.className = "edit-button";
 
-                editButton.addEventListener("click", function () {
-                    editShowing(showing);
-                });
+                editButton.addEventListener(
+                    "click",
+                    function () {
+                        editShowing(showing);
+                    }
+                );
 
                 actionCell.appendChild(editButton);
 
 
-                // Slet-knap
-                const deleteButton = document.createElement("button");
+                // Slet
+                const deleteButton =
+                    document.createElement("button");
 
                 deleteButton.type = "button";
                 deleteButton.textContent = "Slet";
+                deleteButton.className = "delete-button";
 
-                deleteButton.addEventListener("click", function () {
-                    deleteShowing(showing.id);
-                });
+                deleteButton.addEventListener(
+                    "click",
+                    function () {
+                        deleteShowing(showing.id);
+                    }
+                );
 
                 actionCell.appendChild(deleteButton);
             });
@@ -101,7 +119,77 @@ function getUpcomingShowings() {
 }
 
 
-// Henter alle film til dropdown
+// Henter forestillinger for de næste 2 uger
+function getUpcomingShowings() {
+
+    fetch("/api/showings/upcoming")
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error(
+                    "Kunne ikke hente kommende forestillinger"
+                );
+            }
+
+            return response.json();
+        })
+        .then(showings => {
+
+            upcomingShowingTableBody.innerHTML = "";
+
+            if (showings.length === 0) {
+
+                const row =
+                    upcomingShowingTableBody.insertRow();
+
+                const cell = row.insertCell();
+
+                cell.colSpan = 4;
+                cell.textContent =
+                    "Ingen kommende forestillinger";
+
+                return;
+            }
+
+            showings.forEach(showing => {
+
+                const row =
+                    upcomingShowingTableBody.insertRow();
+
+
+                const movieCell = row.insertCell();
+                movieCell.textContent =
+                    showing.movie.title;
+
+
+                const dateCell = row.insertCell();
+                dateCell.textContent =
+                    formatDate(showing.dateTime);
+
+
+                const timeCell = row.insertCell();
+                timeCell.textContent =
+                    formatTime(showing.dateTime);
+
+
+                const theatreCell = row.insertCell();
+                theatreCell.textContent =
+                    showing.theatre.name;
+            });
+
+        })
+        .catch(error => {
+
+            console.error(
+                "Fejl ved hentning af kommende forestillinger:",
+                error
+            );
+
+        });
+}
+
+
+// Henter film til dropdown
 function getMovies() {
 
     fetch("/movies")
@@ -141,7 +229,7 @@ function getMovies() {
 }
 
 
-// Henter alle sale til dropdown
+// Henter sale til dropdown
 function getTheatres() {
 
     fetch("/api/theatres")
@@ -202,8 +290,7 @@ function formatTime(dateTime) {
 }
 
 
-// Fylder formularen med den forestilling,
-// som brugeren vil redigere
+// Fylder formularen med den valgte forestilling
 function editShowing(showing) {
 
     editingShowingId = showing.id;
@@ -218,13 +305,15 @@ function editShowing(showing) {
         showing.dateTime.substring(0, 16);
 
     const submitButton =
-        showingForm.querySelector('button[type="submit"]');
+        showingForm.querySelector(
+            'button[type="submit"]'
+        );
 
     submitButton.textContent = "Gem ændringer";
 }
 
 
-// Sletter en forestilling
+// Sletter forestilling
 function deleteShowing(id) {
 
     fetch("/api/showings/" + id, {
@@ -233,9 +322,12 @@ function deleteShowing(id) {
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Kunne ikke slette forestillingen");
+                throw new Error(
+                    "Kunne ikke slette forestillingen"
+                );
             }
 
+            getShowings();
             getUpcomingShowings();
         })
         .catch(error => {
@@ -249,119 +341,145 @@ function deleteShowing(id) {
 }
 
 
-// Opretter eller redigerer en forestilling
-showingForm.addEventListener("submit", function (event) {
+// Opretter eller redigerer forestilling
+showingForm.addEventListener(
+    "submit",
+    function (event) {
 
-    event.preventDefault();
+        event.preventDefault();
 
 
-    const showing = {
+        const showing = {
 
-        dateTime:
-        document.getElementById("showing-date-time").value,
+            dateTime:
+            document
+                .getElementById(
+                    "showing-date-time"
+                )
+                .value,
 
-        movie: {
-            id: Number(
-                document.getElementById("movie-id").value
+            movie: {
+                id: Number(
+                    document
+                        .getElementById("movie-id")
+                        .value
+                )
+            },
+
+            theatre: {
+                id: Number(
+                    document
+                        .getElementById("theatre-id")
+                        .value
+                )
+            }
+        };
+
+
+        // Redigér eksisterende forestilling
+        if (editingShowingId !== null) {
+
+            fetch(
+                "/api/showings/" + editingShowingId,
+                {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(showing)
+                }
             )
-        },
+                .then(response => {
 
-        theatre: {
-            id: Number(
-                document.getElementById("theatre-id").value
-            )
+                    if (!response.ok) {
+                        throw new Error(
+                            "Kunne ikke redigere forestillingen"
+                        );
+                    }
+
+                    return response.json();
+                })
+                .then(() => {
+
+                    showingForm.reset();
+
+                    editingShowingId = null;
+
+                    const submitButton =
+                        showingForm.querySelector(
+                            'button[type="submit"]'
+                        );
+
+                    submitButton.textContent =
+                        "Opret forestilling";
+
+                    getShowings();
+                    getUpcomingShowings();
+                })
+                .catch(error => {
+
+                    console.error(
+                        "Fejl ved redigering af forestilling:",
+                        error
+                    );
+
+                });
+
         }
-    };
 
+        // Opret ny forestilling
+        else {
 
-    // Hvis editingShowingId har en værdi,
-    // redigerer vi en eksisterende forestilling
-    if (editingShowingId !== null) {
+            fetch("/api/showings", {
 
-        fetch("/api/showings/" + editingShowingId, {
+                method: "POST",
 
-            method: "PUT",
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                body:
+                    JSON.stringify(showing)
 
-            body: JSON.stringify(showing)
-
-        })
-            .then(response => {
-
-                if (!response.ok) {
-                    throw new Error("Kunne ikke redigere forestillingen");
-                }
-
-                return response.json();
             })
-            .then(() => {
+                .then(response => {
 
-                showingForm.reset();
+                    if (!response.ok) {
+                        throw new Error(
+                            "Kunne ikke oprette forestillingen"
+                        );
+                    }
 
-                editingShowingId = null;
+                    return response.json();
+                })
+                .then(() => {
 
-                const submitButton =
-                    showingForm.querySelector('button[type="submit"]');
+                    showingForm.reset();
 
-                submitButton.textContent = "Opret forestilling";
+                    getShowings();
+                    getUpcomingShowings();
+                })
+                .catch(error => {
 
-                getUpcomingShowings();
-            })
-            .catch(error => {
+                    console.error(
+                        "Fejl ved oprettelse af forestilling:",
+                        error
+                    );
 
-                console.error(
-                    "Fejl ved redigering af forestilling:",
-                    error
-                );
-
-            });
-
+                });
+        }
     }
-
-    // Ellers opretter vi en ny forestilling
-    else {
-
-        fetch("/api/showings", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(showing)
-
-        })
-            .then(response => {
-
-                if (!response.ok) {
-                    throw new Error("Kunne ikke oprette forestillingen");
-                }
-
-                return response.json();
-            })
-            .then(() => {
-
-                showingForm.reset();
-
-                getUpcomingShowings();
-            })
-            .catch(error => {
-
-                console.error(
-                    "Fejl ved oprettelse af forestilling:",
-                    error
-                );
-
-            });
-    }
-});
+);
 
 
 // Kører når siden åbnes
 getMovies();
 getTheatres();
+getShowings();
 getUpcomingShowings();
