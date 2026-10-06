@@ -74,24 +74,17 @@ class TheatreServiceTest {
     @Test
     void createTheatreShouldCreateTheatre() {
 
-
         // Arrange
-        String name = "Sal 1";
-        int numberOfRows = 3;
-        int seatsPerRow = 4;
-
-        Theatre savedTheatre = new Theatre();
-        savedTheatre.setName(name);
+        Theatre theatre = new Theatre();
+        theatre.setName("Sal 1");
+        theatre.setNumberOfRows(3);
+        theatre.setSeatsPerRow(4);
 
         when(theatreRepository.save(any(Theatre.class)))
-                .thenReturn(savedTheatre);
+                .thenReturn(theatre);
 
         // Act
-        Theatre result = theatreService.createTheatre(
-                name,
-                numberOfRows,
-                seatsPerRow
-        );
+        Theatre result = theatreService.createTheatre(theatre);
 
         // Assert
         assertEquals("Sal 1", result.getName());
@@ -101,9 +94,8 @@ class TheatreServiceTest {
 
         verify(theatreRepository)
                 .save(any(Theatre.class));
-
-
     }
+
     @Test
     void deleteTheatreShouldDeleteTheatre() {
 

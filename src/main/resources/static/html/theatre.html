@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Opret sal</title>
+
+    <link rel="stylesheet" href="/css/theatre.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            KINO
+            <span>Admin</span>
+        </div>
+
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="movies.html">Film</a>
+            <a href="upcoming-showings.html">Forestillinger</a>
+            <a href="reservations.html">Reservationer</a>
+            <a href="theatre.html" class="active">Sale</a>
+            <a href="#">Salg</a>
+            <a href="employees.html">Employees</a>
+        </nav>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <div>
+                <h1>Sale</h1>
+                <p>Administrer biografsale</p>
+            </div>
+        </div>
+
+
+        <section class="theatre-card">
+
+            <h2 id="theatre-form-title">Opret biografsal</h2>
+
+            <form id="theatre-form">
+
+                <!-- Navn -->
+                <div class="form-group">
+
+                    <label for="theatre-name">
+                        Navn
+                    </label>
+
+                    <input
+                            id="theatre-name"
+                            type="text"
+                            placeholder="Sal 1"
+                            required
+                    >
+
+                </div>
+
+
+                <!-- Antal rækker -->
+                <div class="form-group">
+
+                    <label for="number-of-rows">
+                        Antal rækker
+                    </label>
+
+                    <input
+                            id="number-of-rows"
+                            type="number"
+                            min="1"
+                            placeholder="20"
+                            required
+                    >
+
+                </div>
+
+
+                <!-- Antal sæder pr. række -->
+                <div class="form-group">
+
+                    <label for="seats-per-row">
+                        Antal sæder pr. række
+                    </label>
+
+                    <input
+                            id="seats-per-row"
+                            type="number"
+                            min="1"
+                            placeholder="12"
+                            required
+                    >
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <button
+                            id="submit-theatre-button"
+                            class="primary-button"
+                            type="submit">
+                        Opret Sal
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Liste over eksisterende sale -->
+        <section class="theatre-card">
+
+            <h2>Biografsale</h2>
+
+            <table id="theatre-table">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Navn</th>
+                    <th>Antal rækker</th>
+                    <th>Sæder pr. række</th>
+                    <th>Handling</th>
+                </tr>
+                </thead>
+
+                <tbody id="theatre-table-body">
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script src="/js/theatre.js"></script>
+
+</body>
+
+</html>

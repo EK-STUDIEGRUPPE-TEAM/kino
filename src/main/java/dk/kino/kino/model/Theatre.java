@@ -11,7 +11,8 @@ public class Theatre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private int numberOfRows;
+    private int seatsPerRow;
     private String name;
 
     @OneToMany(mappedBy = "theatre", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -20,8 +21,10 @@ public class Theatre {
     public Theatre() {
     }
 
-    public Theatre(String name) {
+    public Theatre(String name, int numberOfRows, int seatsPerRow) {
         this.name = name;
+        this.numberOfRows = numberOfRows;
+        this.seatsPerRow = seatsPerRow;
     }
 
     public Long getId() {
@@ -32,6 +35,23 @@ public class Theatre {
 
         this.id = id;
     }
+
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    public void setNumberOfRows(int numberOfRows) {
+        this.numberOfRows = numberOfRows;
+    }
+
+    public int getSeatsPerRow() {
+        return seatsPerRow;
+    }
+
+    public void setSeatsPerRow(int seatsPerRow) {
+        this.seatsPerRow = seatsPerRow;
+    }
+
 
     public String getName() {
         return name;

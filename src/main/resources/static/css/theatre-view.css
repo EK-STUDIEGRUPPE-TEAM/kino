@@ -1,0 +1,255 @@
+/* Generel side */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #222;
+}
+
+
+/* Layout */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* Sidebar */
+
+.sidebar {
+    width: 240px;
+    background-color: #1f1f1f;
+    color: white;
+    padding: 25px 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.logo span {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar nav a {
+    color: #ccc;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 6px;
+}
+
+.sidebar nav a:hover {
+    background-color: #333;
+    color: white;
+}
+
+
+/* Main content */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+
+/* Header */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin: 0 0 8px;
+}
+
+.page-header p {
+    margin: 0;
+    color: #666;
+}
+
+.back-button {
+    text-decoration: none;
+    background-color: #333;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
+
+.back-button:hover {
+    background-color: #555;
+}
+
+
+/* Biografsal */
+
+.cinema {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Lærred */
+
+.screen {
+    width: 55%;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #ddd;
+    border-radius: 4px;
+
+    margin-bottom: 35px;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+
+/* Sæder */
+
+.seat-container {
+    display: grid;
+    gap: 8px 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.row-label {
+    font-weight: bold;
+    font-size: 11px;
+    text-align: center;
+}
+
+.seat-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.seat {
+    width: 24px;
+    height: 21px;
+
+    background-color: #555;
+
+    border-radius: 5px 5px 2px 2px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    transition: transform 0.15s, background-color 0.15s;
+}
+
+
+/* Ryggen på sædet */
+
+.seat::before {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+    right: 3px;
+    top: 2px;
+
+    height: 9px;
+
+    background-color: #777;
+
+    border-radius: 3px;
+}
+
+.seat:hover {
+    transform: scale(1.1);
+    background-color: #444;
+}
+
+.seat-number {
+    font-size: 9px;
+    color: #555;
+}
+
+
+
+.action-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.view-button,
+.edit-button,
+.delete-button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+
+
+.view-button {
+    background-color: #333;
+    color: white;
+}
+
+.view-button:hover {
+    background-color: #555;
+}
+
+
+/* Rediger */
+
+.edit-button {
+    background-color: #e0e0e0;
+    color: #222;
+}
+
+.edit-button:hover {
+    background-color: #ccc;
+}
+
+
+/* Slet */
+
+.delete-button {
+    background-color: #d9534f;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c9302c;
+}
