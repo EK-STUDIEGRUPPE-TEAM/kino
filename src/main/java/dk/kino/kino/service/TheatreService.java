@@ -27,13 +27,11 @@ public class TheatreService {
         return theatreRepository.save(theatre);
     }
 
-    public Theatre createTheatre(String name, int numberOfRows, int seatsPerRow) {
+    public Theatre createTheatre(Theatre theatre) {
 
-        Theatre theatre = new Theatre();
-        theatre.setName(name);
-
-        for (int row = 1; row <= numberOfRows; row++) {
-            for (int seatNumber = 1; seatNumber <= seatsPerRow; seatNumber++) {
+        theatreRepository.save(theatre);
+        for (int row = 1; row <= theatre.getNumberOfRows(); row++) {
+            for (int seatNumber = 1; seatNumber <= theatre.getSeatsPerRow(); seatNumber++) {
 
                 Seat seat = new Seat();
                 seat.setRowNumber(row);
@@ -44,7 +42,7 @@ public class TheatreService {
             }
         }
 
-        return theatreRepository.save(theatre);
+        return theatre;
     }
 
     public void deleteTheatre(long id) {

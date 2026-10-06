@@ -1,10 +1,10 @@
 package dk.kino.kino.controller;
 
+import dk.kino.kino.model.Movie;
 import dk.kino.kino.model.Theatre;
 import dk.kino.kino.service.TheatreService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +22,23 @@ public class TheatreController {
     public List<Theatre> getAllTheatres() {
         return theatreService.getAllTheatre();
     }
+
+    @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Theatre addTheatre(@RequestBody Theatre theatre){
+        return theatreService.createTheatre(theatre);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTheatre (@PathVariable Long id){
+        theatreService.deleteTheatre(id);
+    }
+
+    @GetMapping("/{id}")
+    public Theatre getTheatre(@PathVariable Long id){
+        return theatreService.getTheatre(id);
+    }
+
+
 }
