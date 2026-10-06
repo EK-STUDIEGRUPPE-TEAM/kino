@@ -20,6 +20,6 @@ public class TheatreController {
 
     @GetMapping
     public List<Theatre> getAllTheatres() {
-        return theatreService.getAllTheatres();
+        return theatreService.getAllTheatre();
     }
 }
