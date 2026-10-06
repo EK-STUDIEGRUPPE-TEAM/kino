@@ -1,4 +1,4 @@
-/* Generel side */
+/* ---------- General ---------- */
 
 * {
     box-sizing: border-box;
@@ -7,12 +7,12 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #222;
+    background-color: #f5f7fa;
+    color: #172033;
 }
 
 
-/* Layout */
+/* ---------- Layout ---------- */
 
 .admin-layout {
     display: flex;
@@ -20,25 +20,34 @@ body {
 }
 
 
-/* Sidebar */
+/* ---------- Sidebar ---------- */
 
 .sidebar {
-    width: 240px;
-    background-color: #1f1f1f;
+    width: 220px;
+    padding: 24px 16px;
+
+    background-color: #102534;
     color: white;
-    padding: 25px 20px;
 }
 
 .logo {
-    font-size: 24px;
+    margin-bottom: 35px;
+
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 40px;
 }
 
 .logo span {
-    font-size: 14px;
-    color: #aaa;
+    margin-left: 5px;
+
+    font-size: 12px;
+    font-weight: normal;
+
+    color: #cbd5df;
 }
+
+
+/* ---------- Navigation ---------- */
 
 .sidebar nav {
     display: flex;
@@ -47,85 +56,122 @@ body {
 }
 
 .sidebar nav a {
-    color: #ccc;
+    padding: 12px 14px;
+
+    color: #dce4ea;
     text-decoration: none;
-    padding: 12px 15px;
+
     border-radius: 6px;
+
+    transition: background-color 0.2s;
 }
 
 .sidebar nav a:hover {
-    background-color: #333;
+    background-color: #1b394e;
+}
+
+.sidebar nav a.active {
+    background-color: #1d4566;
     color: white;
 }
 
 
-/* Main content */
+/* ---------- Main Content ---------- */
 
 .main-content {
     flex: 1;
-    padding: 30px;
+    min-width: 0;
+
+    padding: 32px;
 }
 
 
-/* Header */
+/* ---------- Page Header ---------- */
 
 .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+
+    margin-bottom: 24px;
 }
 
 .page-header h1 {
-    margin: 0 0 8px;
+    margin: 0;
+    font-size: 28px;
 }
 
 .page-header p {
-    margin: 0;
-    color: #666;
+    margin: 6px 0 0;
+
+    color: #6b7280;
 }
 
+
+/* ---------- Back Button ---------- */
+
 .back-button {
+    padding: 8px 14px;
+
+    background-color: white;
+    color: #1553c7;
+
+    border: 1px solid #b8cae8;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
     text-decoration: none;
-    background-color: #333;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 6px;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
 }
 
 .back-button:hover {
-    background-color: #555;
+    background-color: #edf4ff;
+    border-color: #1553c7;
 }
 
 
-/* Biografsal */
+/* ---------- Theatre ---------- */
 
 .cinema {
-    background-color: white;
-    border-radius: 10px;
     padding: 30px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+    background-color: white;
+
+    border: 1px solid #dfe5eb;
+    border-radius: 8px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    overflow-x: auto;
 }
 
 
-/* Lærred */
+/* ---------- Screen ---------- */
 
 .screen {
     width: 55%;
+    min-width: 300px;
     height: 35px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: #ddd;
-    border-radius: 4px;
-
     margin-bottom: 35px;
+
+    background-color: #102534;
+    color: white;
+
+    border-radius: 4px;
 
     font-size: 12px;
     font-weight: bold;
@@ -133,11 +179,13 @@ body {
 }
 
 
-/* Sæder */
+/* ---------- Seats ---------- */
 
 .seat-container {
     display: grid;
+
     gap: 8px 5px;
+
     justify-content: center;
     align-items: center;
 }
@@ -145,6 +193,9 @@ body {
 .row-label {
     font-weight: bold;
     font-size: 11px;
+
+    color: #5b6574;
+
     text-align: center;
 }
 
@@ -152,6 +203,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 2px;
 }
 
@@ -159,7 +211,7 @@ body {
     width: 24px;
     height: 21px;
 
-    background-color: #555;
+    background-color: #102534;
 
     border-radius: 5px 5px 2px 2px;
 
@@ -167,7 +219,9 @@ body {
 
     cursor: pointer;
 
-    transition: transform 0.15s, background-color 0.15s;
+    transition:
+            transform 0.15s,
+            background-color 0.15s;
 }
 
 
@@ -184,72 +238,57 @@ body {
 
     height: 9px;
 
-    background-color: #777;
+    background-color: #1d4566;
 
     border-radius: 3px;
 }
 
 .seat:hover {
     transform: scale(1.1);
-    background-color: #444;
+
+    background-color: #1553c7;
+}
+
+.seat:hover::before {
+    background-color: #2563d9;
 }
 
 .seat-number {
     font-size: 9px;
-    color: #555;
+
+    color: #5b6574;
 }
 
 
+/* ---------- Responsive ---------- */
 
-.action-cell {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
+@media (max-width: 800px) {
 
-.view-button,
-.edit-button,
-.delete-button {
-    border: none;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 13px;
-    cursor: pointer;
-    text-decoration: none;
-}
+    .admin-layout {
+        flex-direction: column;
+    }
 
+    .sidebar {
+        width: 100%;
+    }
 
+    .sidebar nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 
+    .main-content {
+        padding: 20px;
+    }
 
-.view-button {
-    background-color: #333;
-    color: white;
-}
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
 
-.view-button:hover {
-    background-color: #555;
-}
-
-
-/* Rediger */
-
-.edit-button {
-    background-color: #e0e0e0;
-    color: #222;
-}
-
-.edit-button:hover {
-    background-color: #ccc;
-}
-
-
-/* Slet */
-
-.delete-button {
-    background-color: #d9534f;
-    color: white;
-}
-
-.delete-button:hover {
-    background-color: #c9302c;
+    .screen {
+        width: 80%;
+        min-width: 200px;
+    }
 }
