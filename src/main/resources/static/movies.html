@@ -31,17 +31,22 @@
     <label for="duration">Varighed</label>
     <input type="number" id="duration" name="duration">
 
-    <button type="submit">Opret</button>
+    <button type="submit" id="submitMovie">Opret</button>
 </form>
 
 
 <table id="showMovies">
-    <tr>
-        <th>Titel</th>
-        <th>Genre</th>
-        <th>Varighed</th>
-        <th>Aldersgrænse</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Titel</th>
+            <th>Genre</th>
+            <th>Varighed</th>
+            <th>Aldersgrænse</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="movieTableBody"></tbody>
 </table>
 
 
