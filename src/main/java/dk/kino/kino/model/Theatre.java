@@ -1,9 +1,9 @@
 package dk.kino.kino.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Theatre {
@@ -14,6 +14,9 @@ public class Theatre {
 
     private String name;
 
+    @OneToMany(mappedBy = "theatre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seat> seats = new ArrayList<>();
+
     public Theatre() {
     }
 
@@ -23,6 +26,11 @@ public class Theatre {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id){
+
+        this.id = id;
     }
 
     public String getName() {
