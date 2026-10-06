@@ -1,11 +1,13 @@
-
 const urlMovies = "/api/movies";
 const movieTableBody = document.getElementById("movieTableBody");
 const submitMovie = document.getElementById("submitMovie");
+const formMovie = document.getElementById("addmovie");
+const movieDialog = document.getElementById("movieDialog");
+const movieDialogTitle = document.getElementById("movieDialogTitle");
 
 let movieToEditId = null;
 
-async function fetchAnyUrl(url){
+async function fetchAnyUrl(url) {
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -20,26 +22,51 @@ async function fetchAnyUrl(url){
 async function fetchMovies() {
     const movies = await fetchAnyUrl(urlMovies);
     movieTableBody.innerHTML = "";
-    movies.forEach(movieTable);
+    movies.forEach(insertMovieRow);
 }
 
 fetchMovies();
 
+
+// Konverterer minutter til timer
+function formatDuration(minutes) {
+    const hours = Math.trunc(minutes / 60);
+    const min = minutes % 60;
+
+    // Hvis den er hele timer så vises der ikke minutter
+    if (min === 0) {
+        return hours + " t";
+    }
+
+    return hours + " t " + min + " min";
+}
+
+//Konverterer Genre ENUM's til danske genrenavne
+function formatGenre(genre) {
+    return document.querySelector(`#genre option[value="${genre}"]`).textContent;
+}
+
+
 // Indsætter film i table
 
-function movieTable(movie) {
+function insertMovieRow(movie) {
     const row = movieTableBody.insertRow();
 
     row.insertCell().innerHTML = movie.title;
-    row.insertCell().innerHTML = movie.genre;
-    row.insertCell().innerHTML = movie.duration + " min.";
-    row.insertCell().innerHTML = movie.ageLimit;
+    row.insertCell().innerHTML = formatGenre(movie.genre);
+    row.insertCell().innerHTML = movie.ageLimit + " år";
+    row.insertCell().innerHTML = formatDuration(movie.duration);
+
+    // Begge buttons kan være i en enkel celle (handlinger)
+    const actionCell = row.insertCell();
+    actionCell.classList.add("action-cell");
 
 
     // Button til at redigere film
     const buttonEdit = document.createElement("button");
     buttonEdit.textContent = "Rediger";
-    row.insertCell().appendChild(buttonEdit);
+    buttonEdit.classList.add("edit-button");
+    actionCell.appendChild(buttonEdit);
 
     buttonEdit.addEventListener("click", () => {
         document.getElementById("title").value = movie.title;
@@ -48,31 +75,44 @@ function movieTable(movie) {
         document.getElementById("duration").value = movie.duration;
         movieToEditId = movie.id;
         submitMovie.textContent = "Gem ændringer";
+        movieDialogTitle.textContent = "Rediger film";
+
+        //Åbner vores dialog pop up vindue
+        movieDialog.showModal();
     });
 
 
     // Button til at slette film
     const buttonDelete = document.createElement("button");
     buttonDelete.textContent = "Slet";
-    row.insertCell().appendChild(buttonDelete);
+    buttonDelete.classList.add("delete-button");
+    actionCell.appendChild(buttonDelete);
 
     buttonDelete.addEventListener("click", async () => {
         await deleteMovie(movie.id);
         row.remove();
-
-        // Tjekker om filmen er igang med at blive redigeret
-        if (movieToEditId === movie.id) {
-            movieToEditId = null;
-            formMovie.reset();
-            submitMovie.textContent = "Opret";
-        }
     });
 }
 
 
-// Gemmer film ved opret
+// Nulstiller vores popup og åbner når der trykkes tilføj film
+document.getElementById("openMovieDialog").addEventListener("click", () => {
+    formMovie.reset();
+    movieToEditId = null;
+    movieDialogTitle.textContent = "Tilføj film";
+    submitMovie.textContent = "Opret";
 
-const formMovie = document.getElementById("addmovie");
+    //Åbner vores dialog pop up vindue
+    movieDialog.showModal();
+});
+
+// Lukker vores popup når man trykker annuller
+document.getElementById("cancelMovie").addEventListener("click", () => {
+    movieDialog.close();
+});
+
+
+// Gemmer film ved opret eller rediger
 formMovie.addEventListener("submit", saveMovie);
 
 
@@ -100,6 +140,7 @@ async function sendObjectAsJson(url, object, method) {
     return response.json();
 }
 
+
 async function saveMovie(event) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -117,9 +158,12 @@ async function saveMovie(event) {
 
     form.reset();
     submitMovie.textContent = "Opret";
+
+    // Lukker popup når filmen bliver gemt
+    movieDialog.close();
+
     fetchMovies();
 }
-
 
 
 // Sletter en film

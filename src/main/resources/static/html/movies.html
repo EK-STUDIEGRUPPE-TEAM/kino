@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Film</title>
+    <link rel="stylesheet" href="/css/movie.css">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            KINO
+            <span>Admin</span>
+        </div>
+
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="movies.html" class="active">Film</a>
+            <a href="upcoming-showings.html">Forestillinger</a>
+            <a href="reservations.html">Reservationer</a>
+            <a href="#">Salg</a>
+            <a href="employees.html">Employees</a>
+        </nav>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <div>
+                <h1>Film</h1>
+                <p>Administrer biografens film</p>
+            </div>
+            <button id="openMovieDialog" class="primary-button" type="button">+ Tilføj film</button>
+        </div>
+
+        <section class="movie-card">
+            <table id="movie-table">
+                <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Genre</th>
+                    <th>Aldersgrænse</th>
+                    <th>Varighed</th>
+                    <th>Handling</th>
+                </tr>
+                </thead>
+                <tbody id="movieTableBody"></tbody>
+            </table>
+        </section>
+
+        <dialog id="movieDialog">
+            <h2 id="movieDialogTitle">Tilføj film</h2>
+
+            <form id="addmovie" action="/api/movies/add">
+
+                <div class="form-group">
+                    <label for="title">Titel</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="genre">Genre</label>
+                    <select id="genre" name="genre">
+                        <option value="SCIFI">Sci-fi</option>
+                        <option value="DRAMA">Drama</option>
+                        <option value="ACTION">Action</option>
+                        <option value="ROMANCE">Romantisk</option>
+                        <option value="HORROR">Gyser</option>
+                        <option value="THRILLER">Thriller</option>
+                        <option value="ANIMATION">Animation</option>
+                        <option value="COMEDY">Komedie</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ageLimit">Aldersgrænse</label>
+                    <input type="number" id="ageLimit" name="ageLimit">
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Varighed</label>
+                    <input type="number" id="duration" name="duration">
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" id="submitMovie" class="primary-button">Opret</button>
+                    <button type="button" id="cancelMovie" class="secondary-button">Annuller</button>
+                </div>
+
+            </form>
+        </dialog>
+
+
+    </main>
+
+</div>
+
+<script src="/js/movie.js"></script>
+</body>
+</html>
