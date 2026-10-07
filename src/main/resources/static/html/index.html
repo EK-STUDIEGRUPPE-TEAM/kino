@@ -2,30 +2,96 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Kino</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>KINO</title>
+    <link rel="stylesheet" href="/css/style.css?v=10">
 </head>
 <body>
 
-<h1>Kino</h1>
-<strong>Film</strong> | <a href="reservations.html">Reservationer</a> | <a href="opret-reservation.html">Opret reservation</a>
+<header class="topbar">
 
+    <a href="index.html" class="brand">KINO</a>
 
-<h2>Film</h2>
-<h2>Opret film</h2>
+    <nav class="main-nav">
+        <a href="#current-movies">Film</a>
+        <a href="#about">Om os</a>
+    </nav>
 
-<form id="movie-form">
-    <input id="title" type="text" placeholder="Titel" required>
-    <input id="genre" type="text" placeholder="Genre" required>
-    <input id="ageLimit" type="number" placeholder="Aldersgrænse" required>
+    <div class="header-actions">
+        <a href="movies.html"
+           class="user-button"
+           aria-label="Gå til administration"
+           title="Administration">
 
-    <button type="submit">Opret film</button>
-</form>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"></path>
+            </svg>
 
-<h2>Film</h2>
-<div id="movie-list"></div>
+        </a>
+    </div>
 
-<script src="../js/app.js"></script>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p class="hero-label">Aktuel film</p>
+
+            <h1 id="featured-title">KINO</h1>
+
+            <div id="featured-information"
+                 class="movie-information">
+            </div>
+
+            <p class="hero-description">
+                Se aktuelle film og kommende forestillinger i KINO.
+            </p>
+
+            <a href="upcoming-showings.html"
+               class="showtimes-button">
+                Se spilletider
+            </a>
+        </div>
+        <div class="hero-poster">
+            <span id="featured-letter">K</span>
+        </div>
+    </section>
+
+    <section id="current-movies"
+             class="movies-section">
+
+        <div class="section-header">
+
+            <h2>Aktuelle film</h2>
+
+            <a href="movies.html">
+                Se alle →
+            </a>
+        </div>
+
+        <div id="movie-list"
+             class="movie-grid">
+        </div>
+
+    </section>
+
+    <section id="about"
+             class="about-section">
+        <h2>Om KINO</h2>
+        <p>
+            Hos KINO kan du se aktuelle film og finde kommende forestillinger.
+        </p>
+    </section>
+
+</main>
+<footer>
+    <span>KINO</span>
+</footer>
+
+<script src="/js/index.js?v=10"></script>
 
 </body>
 </html>
