@@ -191,22 +191,22 @@ public class InitData implements CommandLineRunner {
         employeeRepository.save(inspector);
 
         // Reservationer
-        createReservation("Mette Hansen", "20345678", showing1, lilleSalSeats, 5, List.of(5, 6));
-        createReservation("Ahmed Ali", "31234567", showing2, lilleSalSeats, 8, List.of(3, 4, 5));
-        createReservation("Doctor Doofenschmirtz", "42567890", showing4, lilleSalSeats, 3, List.of(6, 7));
-        createReservation("Nanna Poulsen", "26789012", showing4, lilleSalSeats, 10, List.of(1, 2, 3, 4));
-        createReservation("Emma Christensen", "53456789", showing5, storeSalSeats, 20, List.of(4, 5, 6));
-        createReservation("Jonas Nielsen", "28901234", showing6, storeSalSeats, 10, List.of(7, 8, 9, 10));
-        createReservation("Sofie Jensen", "61234567", showing6, storeSalSeats, 12, List.of(1, 2));
-        createReservation("Næbdyret Perry", "40123456", showing7, storeSalSeats, 15, List.of(8, 9));
-        createReservation("Ida Rasmussen", "22345678", showing8, storeSalSeats, 6, List.of(9, 10));
-        createReservation("Frederik Møller", "51234567", showing9, storeSalSeats, 25, List.of(1, 2, 3, 4));
-        createReservation("Oscar Berg", "29876543", showing9, storeSalSeats, 18, List.of(13, 14, 15));
+        createReservation("Mette Hansen", "20345678", showing1, lilleSalSeats, 5, List.of(5, 6),SeatStatus.RESERVED);
+        createReservation("Ahmed Ali", "31234567", showing2, lilleSalSeats, 8, List.of(3, 4, 5), SeatStatus.SOLD);
+        createReservation("Doctor Doofenschmirtz", "42567890", showing4, lilleSalSeats, 3, List.of(6, 7), SeatStatus.RESERVED);
+        createReservation("Nanna Poulsen", "26789012", showing4, lilleSalSeats, 10, List.of(1, 2, 3, 4), SeatStatus.SOLD);
+        createReservation("Emma Christensen", "53456789", showing5, storeSalSeats, 20, List.of(4, 5, 6), SeatStatus.SOLD);
+        createReservation("Jonas Nielsen", "28901234", showing6, storeSalSeats, 10, List.of(7, 8, 9, 10), SeatStatus.RESERVED);
+        createReservation("Sofie Jensen", "61234567", showing6, storeSalSeats, 12, List.of(1, 2), SeatStatus.RESERVED);
+        createReservation("Næbdyret Perry", "40123456", showing7, storeSalSeats, 15, List.of(8, 9), SeatStatus.RESERVED);
+        createReservation("Ida Rasmussen", "22345678", showing8, storeSalSeats, 6, List.of(9, 10), SeatStatus.SOLD);
+        createReservation("Frederik Møller", "51234567", showing9, storeSalSeats, 25, List.of(1, 2, 3, 4), SeatStatus.SOLD);
+        createReservation("Oscar Berg", "29876543", showing9, storeSalSeats, 18, List.of(13, 14, 15), SeatStatus.SOLD);
     }
 
     // Opretter en reservation
     private void createReservation(String customerName, String phone, Showing showing,
-                                   List<Seat> theatreSeats, int row, List<Integer> seatNumbers) {
+                                   List<Seat> theatreSeats, int row, List<Integer> seatNumbers, SeatStatus status) {
         Reservation reservation = new Reservation();
         reservation.setCustomerName(customerName);
         reservation.setPhone(phone);
@@ -217,6 +217,7 @@ public class InitData implements CommandLineRunner {
             ReservationSeat reservationSeat = new ReservationSeat();
             reservationSeat.setReservation(reservation);
             reservationSeat.setSeat(findSeat(theatreSeats, row, seatNumber));
+            reservationSeat.setStatus(status);
             reservationSeatRepository.save(reservationSeat);
         }
     }

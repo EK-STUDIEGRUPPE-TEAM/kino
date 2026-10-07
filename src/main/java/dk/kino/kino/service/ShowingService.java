@@ -36,6 +36,10 @@ public class ShowingService {
     }
 
 
+    public Showing getShowing(long id){
+
+        return showingRepository.findById(id).orElse(null);
+    }
 
 
     public Showing createShowing(Showing request) {

@@ -1,14 +1,14 @@
 /* ---------- General ---------- */
 
-
-
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
+
     font-family: Arial, sans-serif;
+
     background-color: #f5f7fa;
     color: #172033;
 }
@@ -30,6 +30,8 @@ body {
 
     background-color: #102534;
     color: white;
+
+    flex-shrink: 0;
 }
 
 .logo {
@@ -54,6 +56,7 @@ body {
 .sidebar nav {
     display: flex;
     flex-direction: column;
+
     gap: 8px;
 }
 
@@ -61,6 +64,7 @@ body {
     padding: 12px 14px;
 
     color: #dce4ea;
+
     text-decoration: none;
 
     border-radius: 6px;
@@ -110,34 +114,7 @@ body {
 }
 
 
-/* ---------- Back Button ---------- */
-
-.back-button {
-    padding: 8px 14px;
-
-    background-color: white;
-    color: #1553c7;
-
-    border: 1px solid #b8cae8;
-    border-radius: 5px;
-
-    font-size: 12px;
-    font-weight: 600;
-
-    text-decoration: none;
-
-    transition:
-            background-color 0.2s,
-            border-color 0.2s;
-}
-
-.back-button:hover {
-    background-color: #edf4ff;
-    border-color: #1553c7;
-}
-
-
-/* ---------- Theatre ---------- */
+/* ---------- Cinema Card ---------- */
 
 .cinema {
     padding: 30px;
@@ -177,7 +154,32 @@ body {
 
     font-size: 12px;
     font-weight: bold;
+
     letter-spacing: 2px;
+}
+
+.back-button {
+    padding: 8px 14px;
+
+    background-color: white;
+    color: #1553c7;
+
+    border: 1px solid #b8cae8;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: #edf4ff;
+    border-color: #1553c7;
 }
 
 
@@ -193,8 +195,8 @@ body {
 }
 
 .row-label {
-    font-weight: bold;
     font-size: 11px;
+    font-weight: bold;
 
     color: #5b6574;
 
@@ -213,11 +215,9 @@ body {
     width: 24px;
     height: 21px;
 
-    background-color: #102534;
+    position: relative;
 
     border-radius: 5px 5px 2px 2px;
-
-    position: relative;
 
     cursor: pointer;
 
@@ -227,7 +227,7 @@ body {
 }
 
 
-/* Ryggen på sædet */
+/* ---------- Seat Back ---------- */
 
 .seat::before {
     content: "";
@@ -240,25 +240,123 @@ body {
 
     height: 9px;
 
-    background-color: #1d4566;
-
     border-radius: 3px;
 }
 
-.seat:hover {
+
+/* ---------- Available ---------- */
+
+.seat.available {
+    background-color: #16c936;
+}
+
+.seat.available::before {
+    background-color: #25e044;
+}
+
+.seat.available:hover {
     transform: scale(1.1);
 
     background-color: #1553c7;
 }
 
-.seat:hover::before {
+.seat.available:hover::before {
     background-color: #2563d9;
 }
+
+
+/* ---------- Reserved ---------- */
+
+.seat.reserved {
+    background-color: white;
+
+    border: 2px solid #999;
+}
+
+.seat.reserved::before {
+    background-color: #eeeeee;
+}
+
+
+/* ---------- Sold ---------- */
+
+.seat.sold {
+    background-color: #ff1717;
+}
+
+.seat.sold::before {
+    background-color: #ff5555;
+}
+
+
+/* ---------- Selected ---------- */
+
+.seat.selected {
+    background-color: #1553c7;
+}
+
+.seat.selected::before {
+    background-color: #2563d9;
+}
+
+
+/* ---------- Seat Number ---------- */
 
 .seat-number {
     font-size: 9px;
 
     color: #5b6574;
+}
+
+
+/* ---------- Legend ---------- */
+
+.seat-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-top: 30px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 12px;
+
+    color: #5b6574;
+}
+
+.legend-seat {
+    width: 20px;
+    height: 17px;
+
+    position: relative;
+
+    border-radius: 4px 4px 2px 2px;
+}
+
+.legend-seat.available {
+    background-color: #16c936;
+}
+
+.legend-seat.reserved {
+    background-color: white;
+
+    border: 2px solid #999;
+}
+
+.legend-seat.sold {
+    background-color: #ff1717;
+}
+
+.legend-seat.selected {
+    background-color: #1553c7;
 }
 
 
@@ -286,11 +384,16 @@ body {
     .page-header {
         flex-direction: column;
         align-items: flex-start;
+
         gap: 15px;
     }
 
     .screen {
         width: 80%;
         min-width: 200px;
+    }
+
+    .seat-legend {
+        flex-wrap: wrap;
     }
 }

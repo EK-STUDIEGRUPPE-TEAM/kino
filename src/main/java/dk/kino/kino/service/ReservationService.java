@@ -1,18 +1,17 @@
 package dk.kino.kino.service;
 
 
+import dk.kino.kino.model.*;
 import dk.kino.kino.repository.ReservationSeatRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import dk.kino.kino.model.ReservationSeat;
-import dk.kino.kino.model.Reservation;
-import dk.kino.kino.model.Seat;
-import dk.kino.kino.model.Showing;
+
 import dk.kino.kino.repository.ReservationRepository;
 import dk.kino.kino.repository.SeatRepository;
 import dk.kino.kino.repository.ShowingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import dk.kino.kino.exception.NotFoundException;
+import dk.kino.kino.model.SeatStatus;
 
 
 
@@ -89,7 +88,7 @@ public class ReservationService {
         Reservation savedReservation = reservationRepository.save(reservation);
 
         for (Seat seat : seats) {
-            reservationSeatRepository.save(new ReservationSeat(savedReservation, seat));
+            reservationSeatRepository.save(new ReservationSeat(savedReservation, seat, SeatStatus.RESERVED));
         }
 
         return savedReservation;
@@ -102,6 +101,10 @@ public class ReservationService {
         // Sæderne skal slettes først, fordi de peger på reservationen
         reservationSeatRepository.deleteAll(reservationSeatRepository.findByReservationId(reservation.getId()));
         reservationRepository.delete(reservation);
+    }
+
+    public List<ReservationSeat> getReservationsForShowing(Long showingId) {
+        return reservationSeatRepository.findByReservationShowingId(showingId);
     }
 
 
