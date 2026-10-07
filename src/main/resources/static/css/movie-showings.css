@@ -1,0 +1,209 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background-color: #f4f6f8;
+
+    color: #172033;
+}
+
+
+/* Header */
+
+.topbar {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 40px;
+
+    background-color: #152433;
+
+    color: white;
+}
+
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+
+    margin-right: 60px;
+}
+
+
+nav a {
+    color: white;
+
+    text-decoration: none;
+
+    margin-right: 30px;
+}
+
+
+/* Side */
+
+.page {
+    max-width: 900px;
+
+    margin: 30px auto;
+
+    padding: 30px;
+
+    background-color: white;
+
+    border-radius: 8px;
+}
+
+
+.back-link {
+    text-decoration: none;
+
+    color: #687386;
+}
+
+
+/* Film */
+
+.movie-section {
+    display: flex;
+
+    gap: 30px;
+
+    margin-top: 35px;
+    margin-bottom: 40px;
+}
+
+
+.poster {
+    width: 200px;
+    height: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #c96d34;
+
+    color: white;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+
+.movie-info h1 {
+    margin-top: 10px;
+}
+
+
+.movie-details {
+    color: #687386;
+
+    font-weight: bold;
+}
+
+
+/* Datoer */
+
+.dates {
+    display: flex;
+
+    margin-bottom: 40px;
+}
+
+/* Knapper til valg af dato */
+.date-button {
+    flex: 1;
+
+    padding: 18px;
+
+    background-color: white;
+
+    border: 1px solid #dddddd;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+
+.date-button span {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #687386;
+}
+
+
+.date-button.active {
+    background-color: #eef1f4;
+
+    border-bottom: 3px solid #152433;
+}
+
+
+/* Sale */
+
+.theatre {
+    margin-bottom: 35px;
+}
+
+
+.theatre h2 {
+    font-size: 19px;
+}
+
+
+.showtime-button {
+    min-width: 120px;
+
+    padding: 15px;
+
+    margin-right: 12px;
+    margin-bottom: 10px;
+
+    background-color: white;
+
+    border: 1px solid #ccd3da;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+
+.showtime-button:hover {
+    background-color: #eef1f4;
+}
+
+
+.showtime-button.selected {
+    background-color: #152433;
+
+    color: white;
+}
+
+
+/* Valgt forestilling */
+
+#selected-showing {
+    margin-top: 30px;
+
+    padding: 15px;
+
+    background-color: #f4f6f8;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+}
