@@ -1,99 +1,537 @@
+/* ---------- General ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
+    margin: 0;
+
     font-family: Arial, sans-serif;
-    margin: 40px;
+
+    background-color: #f5f7fa;
+    color: #172033;
 }
 
-#movie-list div {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 10px;
+a {
+    color: inherit;
 }
 
-#reservation-list .reservation {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 10px;
-}
 
-.empty-message {
-    padding: 15px;
-    background-color: #f5f5f5;
-    border: 1px dashed #999;
-    font-style: italic;
-}
+/* ---------- Header ---------- */
 
-#reservation-form select,
-#reservation-form input {
-    display: block;
-    margin: 6px 0 12px;
-    padding: 6px;
-}
+.topbar {
+    height: 64px;
 
-.screen {
-    width: 420px;
-    max-width: 100%;
-    margin-bottom: 15px;
-    padding: 4px;
-    text-align: center;
-    background-color: #ddd;
-    font-size: 12px;
-    letter-spacing: 4px;
-}
-
-.seat-row {
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin-bottom: 4px;
+
+    padding: 0 28px;
+
+    background-color: #102534;
+    color: white;
 }
 
-.row-label {
+
+/* KINO */
+
+.brand {
+    margin-right: 45px;
+
+    color: white;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+
+/* Navigation */
+
+.main-nav {
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+}
+
+.main-nav a {
+    color: #dce4ea;
+
+    font-size: 14px;
+
+    text-decoration: none;
+
+    transition: color 0.2s;
+}
+
+.main-nav a:hover {
+    color: white;
+}
+
+
+/* Right side */
+
+.header-actions {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+}
+
+
+/* Person icon */
+
+.user-button {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    transition: background-color 0.2s;
+}
+
+.user-button:hover {
+    background-color: #1d4566;
+}
+
+.user-button svg {
     width: 20px;
+    height: 20px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+}
+
+
+/* ---------- Hero ---------- */
+
+.hero {
+    position: relative;
+
+    min-height: 430px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 55px 8%;
+
+    overflow: hidden;
+
+    background:
+            linear-gradient(
+                    110deg,
+                    #111820 0%,
+                    #102534 55%,
+                    #1d4566 100%
+            );
+
+    color: white;
+}
+
+
+/* Small visual depth */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -100px;
+    top: -120px;
+
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+            linear-gradient(
+                    90deg,
+                    rgba(0, 0, 0, 0.18),
+                    transparent
+            );
+}
+
+
+/* Hero content */
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 570px;
+}
+
+.hero-label {
+    margin: 0 0 10px;
+
+    color: #cbd5df;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.hero h1 {
+    margin: 0 0 12px;
+
+    font-size: 46px;
+    line-height: 1.05;
+}
+
+
+/* Genre / duration / age */
+
+.movie-information {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-bottom: 18px;
+
+    color: #dce4ea;
+
+    font-size: 14px;
+}
+
+.information-separator {
+    color: #82909c;
+}
+
+
+.hero-description {
+    max-width: 470px;
+
+    margin-bottom: 25px;
+
+    color: #e2e8ee;
+
+    line-height: 1.55;
+}
+
+
+/* Showtime button */
+
+.showtimes-button {
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    background-color: #1553c7;
+    color: white;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+            background-color 0.2s,
+            transform 0.2s;
+}
+
+.showtimes-button:hover {
+    background-color: #1044a7;
+
+    transform: translateY(-1px);
+}
+
+
+/* ---------- Hero poster ---------- */
+
+/*
+   Movie-modellen indeholder ikke et billede endnu.
+   Derfor bruger vi et visuelt placeholder-kort.
+*/
+
+.hero-poster {
+    position: relative;
+
+    z-index: 2;
+
+    width: 215px;
+    height: 300px;
+
+    margin-right: 8%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    #1d4566,
+                    #102534
+            );
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.30);
+}
+
+.hero-poster span {
+    color: rgba(255, 255, 255, 0.88);
+
+    font-size: 88px;
+    font-weight: bold;
+}
+
+
+/* ---------- Current Movies ---------- */
+
+.movies-section {
+    padding: 32px 28px 45px;
+
+    background-color: white;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+}
+
+.section-header a {
+    color: #1553c7;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.section-header a:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- Movie Grid ---------- */
+
+.movie-grid {
+    display: grid;
+
+    grid-template-columns:
+            repeat(auto-fit, minmax(170px, 1fr));
+
+    gap: 20px;
+}
+
+
+/* Individual movie */
+
+.customer-movie-card {
+    min-width: 0;
+}
+
+
+/* Poster placeholder */
+
+.movie-poster {
+    height: 235px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    overflow: hidden;
+
+    background:
+            linear-gradient(
+                    145deg,
+                    #1d4566,
+                    #102534
+            );
+
+    border-radius: 7px;
+
+    color: white;
+
+    font-size: 54px;
+    font-weight: bold;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+
+    transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+}
+
+.customer-movie-card:hover .movie-poster {
+    transform: translateY(-3px);
+
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.16);
+}
+
+
+/* Movie information */
+
+.customer-movie-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 15px;
+}
+
+.customer-movie-card p {
+    margin: 3px 0;
+
+    color: #6b7280;
+
     font-size: 12px;
-    color: #666;
+
+    line-height: 1.4;
 }
 
-.seat {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #999;
-    border-radius: 4px;
-    background-color: #fff;
-    font-size: 11px;
-    cursor: pointer;
+
+/* ---------- Empty state ---------- */
+
+.empty-message {
+    grid-column: 1 / -1;
+
+    padding: 35px;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    background-color: #f8fafc;
+
+    border: 1px solid #dfe5eb;
+    border-radius: 8px;
 }
 
-.seat.selected {
-    background-color: #2e7d32;
-    border-color: #2e7d32;
-    color: #fff;
+
+/* ---------- About ---------- */
+
+.about-section {
+    padding: 55px 28px;
+
+    text-align: center;
+
+    background-color: #f5f7fa;
 }
 
-.seat.reserved {
-    background-color: #ccc;
-    color: #888;
-    cursor: not-allowed;
+.about-section h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
-.message {
-    margin-top: 15px;
-    padding: 15px;
+.about-section p {
+    margin: 0;
+
+    color: #6b7280;
 }
 
-.message.success {
-    background-color: #e8f5e9;
-    border: 1px solid #2e7d32;
+
+/* ---------- Footer ---------- */
+
+footer {
+    padding: 25px 28px;
+
+    background-color: #102534;
+    color: white;
+
+    font-weight: bold;
 }
 
-.message.error {
-    background-color: #ffebee;
-    border: 1px solid #c62828;
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .brand {
+        margin-right: 25px;
+    }
+
+    .main-nav {
+        gap: 15px;
+    }
+
+    .hero {
+        min-height: auto;
+
+        padding: 50px 25px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero-poster {
+        display: none;
+    }
+
+    .movies-section {
+        padding: 28px 20px;
+    }
+
 }
-.cancel-button {
-    padding: 6px 12px;
-    background-color: #c62828;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
+
+
+@media (max-width: 500px) {
+
+    .main-nav a:last-child {
+        display: none;
+    }
+
+    .movie-grid {
+        grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+        gap: 15px;
+    }
+
+    .movie-poster {
+        height: 190px;
+    }
+
 }
