@@ -1,5 +1,6 @@
 package dk.kino.kino.controller;
 
+import dk.kino.kino.model.ReservationSeat;
 import dk.kino.kino.model.Showing;
 import dk.kino.kino.service.ShowingService;
 
@@ -19,6 +20,13 @@ public class ShowingController {
     // Dependency injection
     public ShowingController(ShowingService showingService) {
         this.showingService = showingService;
+    }
+
+
+    @GetMapping("/{id}")
+    public Showing getShowing(@PathVariable long id){
+
+        return showingService.getShowing(id);
     }
 
     // Henter alle forestillinger
@@ -45,6 +53,7 @@ public class ShowingController {
                 .status(HttpStatus.CREATED)
                 .body(savedShowing);
     }
+
 
 
     // Redigerer en eksisterende forestilling
