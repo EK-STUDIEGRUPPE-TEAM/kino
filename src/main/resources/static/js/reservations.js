@@ -21,20 +21,9 @@ function getReservations() {
                 return;
             }
 
-            const grouped = {};
-            reservations.forEach(reservationSeat => {
-                const reservation = reservationSeat.reservation;
-                if (!grouped[reservation.id]) {
-                    grouped[reservation.id] = {
-                        reservation: reservation,
-                        seats: []
-                    };
-                }
-                grouped[reservation.id].seats.push(reservationSeat.seat);
-            });
-
-            Object.values(grouped).forEach(({ reservation, seats }) => {
+            reservations.forEach(reservation => {
                 const showing = reservation.showing;
+                const seats = reservation.reservationSeats.map(reservationSeat => reservationSeat.seat);
                 const reservationElement = document.createElement("div");
                 reservationElement.className = "reservation";
 
