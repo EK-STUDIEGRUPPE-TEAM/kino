@@ -1,29 +1,25 @@
-const movieList =
-    document.getElementById("movie-list");
+const nextShowing =
+    document.getElementById("next-showing");
 
-const featuredTitle =
-    document.getElementById("featured-title");
+const theatreList =
+    document.getElementById("theatre-list");
 
-const featuredInformation =
-    document.getElementById("featured-information");
-
-const featuredLetter =
-    document.getElementById("featured-letter");
+const employeeList =
+    document.getElementById("employee-list");
 
 
 
-/* ---------- GET MOVIES ---------- */
+// Henter de kommende forestillinger
+function getShowings() {
 
-function getMovies() {
-
-    fetch("/api/movies")
+    fetch("/api/showings/upcoming")
 
         .then(response => {
 
             if (!response.ok) {
 
                 throw new Error(
-                    "Kunne ikke hente film"
+                    "Kunne ikke hente forestillinger"
                 );
 
             }
@@ -32,25 +28,23 @@ function getMovies() {
 
         })
 
-        .then(movies => {
+        .then(showings => {
 
-            showFeaturedMovie(movies);
-
-            showMovies(movies);
+            showNextShowing(showings);
 
         })
 
         .catch(error => {
 
             console.error(
-                "Fejl ved hentning af film:",
+                "Fejl ved hentning af forestillinger:",
                 error
             );
 
 
-            movieList.innerHTML = `
-                <p class="empty-message">
-                    Filmene kunne ikke hentes.
+            nextShowing.innerHTML = `
+                <p class="next-message">
+                    Forestillingen kunne ikke hentes.
                 </p>
             `;
 
@@ -60,56 +54,51 @@ function getMovies() {
 
 
 
-/* ---------- FEATURED MOVIE ---------- */
+// Viser den næste forestilling
+function showNextShowing(showings) {
 
-function showFeaturedMovie(movies) {
+    if (showings.length === 0) {
 
-    if (movies.length === 0) {
-
-        featuredTitle.textContent = "KINO";
-
-        featuredInformation.textContent =
-            "Ingen aktuelle film";
-
-        featuredLetter.textContent = "K";
+        nextShowing.innerHTML = `
+            <p class="next-message">
+                Ingen kommende forestillinger.
+            </p>
+        `;
 
         return;
 
     }
 
 
-    const movie = movies[0];
+    // Liste sorteret efter dato så den tætteste er den næste
+    const showing = showings[0];
 
 
-    featuredTitle.textContent =
-        movie.title;
+    nextShowing.innerHTML = `
+
+        <h2 class="next-title">
+            ${showing.movie.title}
+        </h2>
 
 
-    featuredLetter.textContent =
-        movie.title.charAt(0).toUpperCase();
+        <div class="next-information">
 
+            <div>
+                <span class="next-label">Dato</span>
+                <span class="next-value">${formatDate(showing.dateTime)}</span>
+            </div>
 
-    featuredInformation.innerHTML = `
+            <div>
+                <span class="next-label">Tid</span>
+                <span class="next-value">${formatTime(showing.dateTime)}</span>
+            </div>
 
-        <span>
-            ${formatGenre(movie.genre)}
-        </span>
+            <div>
+                <span class="next-label">Sal</span>
+                <span class="next-value">${showing.theatre.name}</span>
+            </div>
 
-        <span class="information-separator">
-            •
-        </span>
-
-        <span>
-            ${formatDuration(movie.duration)}
-        </span>
-
-        <span class="information-separator">
-            •
-        </span>
-
-        <span>
-            ${movie.ageLimit} år
-        </span>
+        </div>
 
     `;
 
@@ -117,68 +106,88 @@ function showFeaturedMovie(movies) {
 
 
 
-/* ---------- MOVIE LIST ---------- */
+// Henter salene
+function getTheatres() {
 
-function showMovies(movies) {
+    fetch("/api/theatres")
 
-    movieList.innerHTML = "";
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Kunne ikke hente sale"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(theatres => {
+
+            showTheatres(theatres);
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Fejl ved hentning af sale:",
+                error
+            );
 
 
-    if (movies.length === 0) {
+            theatreList.innerHTML = `
+                <p class="side-message">
+                    Salene kunne ikke hentes.
+                </p>
+            `;
 
-        movieList.innerHTML = `
+        });
 
-            <p class="empty-message">
-                Der er ingen aktuelle film.
-            </p>
-
-        `;
-
-        return;
-
-    }
+}
 
 
-    movies.forEach(movie => {
 
-        const movieCard =
-            document.createElement("article");
+// Indsætter sale
+function showTheatres(theatres) {
+
+    theatreList.innerHTML = "";
 
 
-        movieCard.classList.add(
-            "customer-movie-card"
+    theatres.forEach(theatre => {
+
+        const theatreBox =
+            document.createElement("div");
+
+
+        theatreBox.classList.add(
+            "theatre-box"
         );
 
 
-        movieCard.innerHTML = `
+        theatreBox.innerHTML = `
 
-            <div class="movie-poster">
-
-                ${movie.title.charAt(0).toUpperCase()}
-
-            </div>
+            <span class="theatre-name">
+                ${theatre.name}
+            </span>
 
 
-            <h3>
-                ${movie.title}
-            </h3>
+            <span class="theatre-capacity">
+                ${getCapacity(theatre)}
+            </span>
 
 
-            <p>
-                ${formatGenre(movie.genre)}
-            </p>
-
-
-            <p>
-                ${formatDuration(movie.duration)}
-                ·
-                ${movie.ageLimit} år
-            </p>
+            <span class="theatre-size">
+                ${theatre.numberOfRows} × ${theatre.seatsPerRow} sæder
+            </span>
 
         `;
 
 
-        movieList.appendChild(movieCard);
+        theatreList.appendChild(theatreBox);
 
     });
 
@@ -186,78 +195,145 @@ function showMovies(movies) {
 
 
 
-/* ---------- FORMAT DURATION ---------- */
+// Henter medarbejdere
+function getEmployees() {
 
-function formatDuration(minutes) {
+    fetch("/api/employee")
 
-    const hours =
-        Math.trunc(minutes / 60);
+        .then(response => {
 
-    const remainingMinutes =
-        minutes % 60;
+            if (!response.ok) {
+
+                throw new Error(
+                    "Kunne ikke hente medarbejdere"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(employees => {
+
+            showEmployees(employees);
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Fejl ved hentning af medarbejdere:",
+                error
+            );
 
 
-    if (remainingMinutes === 0) {
+            employeeList.innerHTML = `
+                <li class="side-message">
+                    Personalet kunne ikke hentes.
+                </li>
+            `;
 
-        return hours + " t";
+        });
 
-    }
+}
 
+
+
+// Indsætter medarbejdere i listen
+function showEmployees(employees) {
+
+    employeeList.innerHTML = "";
+
+
+    employees.forEach(employee => {
+
+        const employeeItem =
+            document.createElement("li");
+
+
+        employeeItem.innerHTML = `
+
+            <span class="staff-name">
+                ${employee.name}
+            </span>
+
+            <span class="staff-role">
+                ${formatEmployeeType(employee.type)}
+            </span>
+
+        `;
+
+
+        employeeList.appendChild(employeeItem);
+
+    });
+
+}
+
+
+
+// Udregner antal sæder i en sal
+function getCapacity(theatre) {
 
     return (
-        hours +
-        " t " +
-        remainingMinutes +
-        " min"
+        theatre.numberOfRows *
+        theatre.seatsPerRow
     );
 
 }
 
 
 
-/* ---------- FORMAT GENRE ---------- */
+// Formaterer dato
+function formatDate(dateTime) {
 
-function formatGenre(genre) {
+    const date = new Date(dateTime);
 
-    if (genre === "SCIFI") {
-        return "Sci-fi";
-    }
-
-    if (genre === "DRAMA") {
-        return "Drama";
-    }
-
-    if (genre === "ACTION") {
-        return "Action";
-    }
-
-    if (genre === "ROMANCE") {
-        return "Romantisk";
-    }
-
-    if (genre === "HORROR") {
-        return "Gyser";
-    }
-
-    if (genre === "THRILLER") {
-        return "Thriller";
-    }
-
-    if (genre === "ANIMATION") {
-        return "Animation";
-    }
-
-    if (genre === "COMEDY") {
-        return "Komedie";
-    }
-
-
-    return genre;
+    return date.toLocaleDateString("da-DK");
 
 }
 
 
 
-/* ---------- START ---------- */
+// Formaterer tidspunkt
+function formatTime(dateTime) {
 
-getMovies();
+    const date = new Date(dateTime);
+
+    return date.toLocaleTimeString("da-DK", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+}
+
+
+
+// Konverterer EmployeeType ENUM's til pæne navne
+function formatEmployeeType(type) {
+
+    if (type === "SALES") {
+        return "Sales";
+    }
+
+    if (type === "MOVIE_OPERATOR") {
+        return "Movie Operator";
+    }
+
+    if (type === "TICKET_INSPECTOR") {
+        return "Ticket Inspector";
+    }
+
+    return type;
+
+}
+
+
+
+// Kører når siden åbnes
+getShowings();
+
+getTheatres();
+
+getEmployees();
