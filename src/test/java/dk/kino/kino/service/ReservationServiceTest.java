@@ -1,11 +1,7 @@
 package dk.kino.kino.service;
 
 import dk.kino.kino.exception.NotFoundException;
-import dk.kino.kino.model.Reservation;
-import dk.kino.kino.model.ReservationSeat;
-import dk.kino.kino.model.Seat;
-import dk.kino.kino.model.Showing;
-import dk.kino.kino.model.Theatre;
+import dk.kino.kino.model.*;
 import dk.kino.kino.repository.ReservationRepository;
 import dk.kino.kino.repository.ReservationSeatRepository;
 import dk.kino.kino.repository.SeatRepository;
@@ -203,7 +199,7 @@ class ReservationServiceTest {
                 .thenReturn(List.of(seat));
 
         when(reservationSeatRepository.findByReservationShowingId(1L))
-                .thenReturn(List.of(new ReservationSeat(new Reservation(), seat)));
+                .thenReturn(List.of(new ReservationSeat(new Reservation(), seat, SeatStatus.RESERVED)));
 
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,

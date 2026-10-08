@@ -1,5 +1,6 @@
 package dk.kino.kino.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -10,21 +11,40 @@ public class ReservationSeat {
     @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id;
 
+
     @ManyToOne
     @JoinColumn ( name = "reservation_id" )
+    @JsonIgnore
     private Reservation reservation;
+
+
 
     @ManyToOne
     @JoinColumn ( name = "seat_id" )
     private Seat seat;
 
+    @Enumerated(EnumType.STRING)
+    private SeatStatus status;
+
+
+
+
     public ReservationSeat( ) {
     }
 
-    public ReservationSeat( Reservation reservation , Seat seat ) {
+    public ReservationSeat( Reservation reservation , Seat seat, SeatStatus status) {
         this.reservation = reservation;
         this.seat = seat;
+        this.status = status;
 
+    }
+
+    public SeatStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SeatStatus status) {
+        this.status = status;
     }
 
     public Long getId( ) {

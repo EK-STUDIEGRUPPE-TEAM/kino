@@ -61,8 +61,24 @@ function insertMovieRow(movie) {
     const actionCell = row.insertCell();
     actionCell.classList.add("action-cell");
 
+    // Knap til at vælge forestilling for filmen
+    const buttonShowings = document.createElement("button");
 
-    // Button til at redigere film
+    buttonShowings.textContent = "Vælg forestilling";
+    buttonShowings.classList.add("showing-button");
+
+    actionCell.appendChild(buttonShowings);
+
+
+// Sender brugeren videre til filmens forestillinger
+    buttonShowings.addEventListener("click", () => {
+
+        window.location.href =
+            "movie-showings.html?movieId=" + movie.id;
+
+    });
+
+    // Knap til at redigere film
     const buttonEdit = document.createElement("button");
     buttonEdit.textContent = "Rediger";
     buttonEdit.classList.add("edit-button");
@@ -82,7 +98,7 @@ function insertMovieRow(movie) {
     });
 
 
-    // Button til at slette film
+    // Knap til at slette film
     const buttonDelete = document.createElement("button");
     buttonDelete.textContent = "Slet";
     buttonDelete.classList.add("delete-button");

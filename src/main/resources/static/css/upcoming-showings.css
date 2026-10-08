@@ -258,6 +258,32 @@ button {
     border-color: #c62828;
 }
 
+.showCinema-button {
+    margin-left: 6px;
+
+    padding: 6px 12px;
+
+    background-color: white;
+    color: #28c630;
+
+    border: 1px solid #bfe6c2;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.showCinema-button:hover {
+    background-color: #f0fff1;
+    border-color: #28c630;
+}
+
 
 /* ---------- Empty Table ---------- */
 

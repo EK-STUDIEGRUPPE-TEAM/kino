@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biografsal</title>
-  <link rel="stylesheet" href="/css/theatre-view.css">
+    <meta charset="UTF-8">
+    <title>Showing theatre</title>
+  <link rel="stylesheet" href="/css/showing-theatre.css?v=10">
 </head>
-
 <body>
 
 <div class="admin-layout">
@@ -18,9 +16,9 @@
       <a href="index.html">Forside</a>
       <a href="#">Dashboard</a>
       <a href="movies.html">Film</a>
-      <a href="upcoming-showings.html">Forestillinger</a>
+      <a href="upcoming-showings.html" class="active">Forestillinger</a>
       <a href="reservations.html">Reservationer</a>
-      <a href="theatre.html" class="active">Sale</a>
+      <a href="theatre.html" >Sale</a>
       <a href="employees.html">Medarbejdere</a>
     </nav>
   </aside>
@@ -33,7 +31,7 @@
         <p id="theatre-info">Indlæser sal...</p>
       </div>
 
-      <a href="theatre.html" class="back-button">
+      <a href="upcoming-showings.html" class="back-button">
         Tilbage
       </a>
     </div>
@@ -46,9 +44,15 @@
 
   </main>
 
+
 </div>
 
-<script src="/js/theatre-view.js"></script>
+
+
+
+
+<script src="/js/showing-theatre.js"></script>
+
 
 </body>
 </html>

@@ -1,3 +1,5 @@
+
+
 const showingTableBody =
     document.getElementById("showing-table-body");
 
@@ -105,6 +107,23 @@ function getShowings() {
                 );
 
                 actionCell.appendChild(deleteButton);
+
+                // Se sal
+                const theatreButton =
+                    document.createElement("button");
+
+                theatreButton.type = "button";
+                theatreButton.textContent = "Se sal";
+                theatreButton.className = "showCinema-button";
+
+                theatreButton.addEventListener(
+                    "click",
+                    function () {
+                        window.location.href = "showing-theatre.html?showingId=" + showing.id;
+                    }
+                );
+
+                actionCell.appendChild(theatreButton);
             });
 
         })

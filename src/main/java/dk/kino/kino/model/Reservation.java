@@ -2,6 +2,9 @@ package dk.kino.kino.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Reservation {
 
@@ -12,8 +15,14 @@ public class Reservation {
     private String customerName;
     private String phone;
 
+
+
+    @OneToMany(mappedBy = "reservation")
+    private List<ReservationSeat> reservationSeats = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "showing_id")
+
     private Showing showing;
 
     public Reservation() {
@@ -27,6 +36,10 @@ public class Reservation {
 
     public Long getId() {
         return id;
+    }
+
+    public List<ReservationSeat> getReservationSeats() {
+        return reservationSeats;
     }
 
     public String getCustomerName() {

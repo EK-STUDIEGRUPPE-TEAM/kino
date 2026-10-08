@@ -16,6 +16,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
+
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
@@ -47,6 +48,11 @@ public class ReservationController {
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<Map<String, String>> handleSeatTaken(IllegalStateException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
+    }
+
+    @GetMapping("/showing/{showingId}")
+    public List<ReservationSeat> getReservationsForShowing(@PathVariable Long showingId) {
+        return reservationService.getReservationsForShowing(showingId);
     }
 
 }

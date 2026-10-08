@@ -1,0 +1,471 @@
+/* ---------- General ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: "Figtree", Arial, sans-serif;
+
+    background-color: #f3f5f9;
+    color: #111f33;
+}
+
+a {
+    color: inherit;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+
+/* ---------- Header ---------- */
+
+.topbar {
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 80px;
+
+    background-color: white;
+
+    border-bottom: 1px solid #e3e7ee;
+}
+
+.brand {
+    font-size: 21px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-decoration: none;
+}
+
+.brand span {
+    color: #4b5a6e;
+
+    font-weight: 500;
+
+    letter-spacing: 0;
+}
+
+
+/* ---------- Layout ---------- */
+
+.dashboard {
+    max-width: 1440px;
+
+    margin: 0 auto;
+    padding: 36px 80px 60px;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 300px;
+
+    gap: 32px 20px;
+}
+
+
+/* ---------- Next showing ---------- */
+
+.next-panel {
+    display: flex;
+    flex-direction: column;
+
+    padding: 28px;
+
+    background-color: #112033;
+    color: white;
+
+    border-radius: 18px;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+.panel-header h1 {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.panel-header a {
+    color: #7fb0ff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.panel-header a:hover {
+    text-decoration: underline;
+}
+
+
+/* Movie */
+
+.next-showing {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.next-title {
+    margin-bottom: 24px;
+
+    font-size: 42px;
+    font-weight: 800;
+
+    line-height: 1.1;
+}
+
+
+/* Date / time / theatre */
+
+.next-information {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.next-information div {
+    padding: 16px 18px;
+
+    background-color: #1a2d45;
+
+    border-radius: 10px;
+}
+
+.next-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #b9c4d3;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+.next-value {
+    display: block;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.next-message {
+    margin: 0;
+
+    color: #b9c4d3;
+
+    text-align: center;
+}
+
+
+/* ---------- Side column ---------- */
+
+.side-column {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.card {
+    padding: 24px;
+
+    background-color: white;
+
+    border: 1px solid #e3e7ee;
+    border-radius: 18px;
+}
+
+.card h2 {
+    margin-bottom: 14px;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.staff-card {
+    flex: 1;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+}
+
+.card-header h2 {
+    margin-bottom: 0;
+}
+
+.card-header a {
+    padding: 6px 10px;
+
+    background-color: #ebf1fb;
+    color: #1553c7;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: background-color 0.2s;
+}
+
+.card-header a:hover {
+    background-color: #dbe6f8;
+}
+
+
+/* Theatres */
+
+.theatre-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+.theatre-box {
+    padding: 13px 14px;
+
+    background-color: #ebf1fb;
+
+    border-radius: 10px;
+}
+
+.theatre-name {
+    display: block;
+
+    color: #4b5a6e;
+
+    font-size: 12px;
+}
+
+.theatre-capacity {
+    display: block;
+
+    margin: 2px 0;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    line-height: 1.1;
+}
+
+.theatre-size {
+    display: block;
+
+    color: #4b5a6e;
+
+    font-size: 12px;
+}
+
+
+/* Staff */
+
+.staff-list {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.staff-list li {
+    margin-bottom: 14px;
+}
+
+.staff-name {
+    display: block;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.staff-role {
+    display: block;
+
+    color: #6b7789;
+
+    font-size: 12px;
+}
+
+.side-message {
+    margin: 0;
+
+    color: #6b7789;
+
+    font-size: 13px;
+}
+
+
+/* ---------- Shortcuts ---------- */
+
+.shortcut-grid {
+    grid-column: 1 / -1;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.shortcut-card {
+    padding: 22px;
+
+    background-color: white;
+
+    border: 1px solid #e3e7ee;
+    border-radius: 18px;
+}
+
+.shortcut-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    background-color: #e3ecfb;
+
+    border-radius: 10px;
+
+    color: #1553c7;
+}
+
+.shortcut-icon svg {
+    width: 22px;
+    height: 22px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.shortcut-card h3 {
+    margin-bottom: 16px;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.shortcut-button {
+    display: block;
+
+    padding: 12px;
+
+    background-color: #112033;
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-align: center;
+    text-decoration: none;
+
+    transition: background-color 0.2s;
+}
+
+.shortcut-button:hover {
+    background-color: #1d3a5c;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1100px) {
+
+    .topbar {
+        padding: 0 24px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+
+        padding: 24px;
+    }
+
+    .side-column {
+        flex-direction: row;
+    }
+
+    .side-column .card {
+        flex: 1;
+    }
+
+    .shortcut-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .topbar {
+        padding: 0 16px;
+    }
+
+    .dashboard {
+        padding: 16px;
+    }
+
+    .next-title {
+        font-size: 32px;
+    }
+
+    .next-information {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-header h1 {
+        font-size: 20px;
+    }
+
+    .side-column {
+        flex-direction: column;
+    }
+
+    .shortcut-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
