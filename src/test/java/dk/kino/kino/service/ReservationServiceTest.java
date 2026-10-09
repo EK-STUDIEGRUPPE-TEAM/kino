@@ -47,19 +47,20 @@ class ReservationServiceTest {
     }
 
 
-    // Tester at alle reservationer bliver hentet
+
     @Test
-    void getAllReservationsReturnsAllReservationSeats() {
+    void getAllReservationsReturnsAllReservations() {
 
-        List<ReservationSeat> reservationSeats = List.of(new ReservationSeat(), new ReservationSeat());
+        List<Reservation> reservations = List.of(new Reservation(), new Reservation());
 
-        when(reservationSeatRepository.findAll())
-                .thenReturn(reservationSeats);
+        when(reservationRepository.findAll())
+                .thenReturn(reservations);
 
-        List<ReservationSeat> result = reservationService.getAllReservations();
+        List<Reservation> result = reservationService.getAllReservations();
 
         assertEquals(2, result.size());
     }
+
 
 
     // Tester at en reservation bliver oprettet når alt er i orden

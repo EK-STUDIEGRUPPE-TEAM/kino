@@ -36,8 +36,8 @@ public class ReservationService {
         this.seatRepository = seatRepository;
     }
 
-    public List<ReservationSeat> getAllReservations() {
-        return reservationSeatRepository.findAll();
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
     }
 
     @Transactional
