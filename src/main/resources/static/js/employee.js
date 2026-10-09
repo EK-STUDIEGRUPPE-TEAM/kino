@@ -26,7 +26,7 @@ function getEmployees() {
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Could not get employees");
+                throw new Error("Kunne ikke få nogen medarbejderer");
             }
 
             return response.json();
@@ -42,7 +42,7 @@ function getEmployees() {
                 const cell = row.insertCell();
 
                 cell.colSpan = 4;
-                cell.textContent = "No employees found";
+                cell.textContent = "Ingen medarbejder fundet";
                 cell.classList.add("empty-table");
 
                 return;
@@ -97,7 +97,7 @@ function getEmployees() {
                 const editButton = document.createElement("button");
 
                 editButton.type = "button";
-                editButton.textContent = "Edit";
+                editButton.textContent = "Redigere";
                 editButton.classList.add("edit-button");
 
 
@@ -108,9 +108,9 @@ function getEmployees() {
                     employeeName.value = employee.name;
                     employeeType.value = employee.type;
 
-                    employeeFormTitle.textContent = "Edit Employee";
+                    employeeFormTitle.textContent = "Redigere Medarbejder";
 
-                    submitEmployeeButton.textContent = "Save Changes";
+                    submitEmployeeButton.textContent = "Gem Ændringer";
 
                     cancelEditButton.hidden = false;
 
@@ -134,7 +134,7 @@ function getEmployees() {
                 const deleteButton = document.createElement("button");
 
                 deleteButton.type = "button";
-                deleteButton.textContent = "Delete";
+                deleteButton.textContent = "Slet";
                 deleteButton.classList.add("delete-button");
 
 
@@ -153,7 +153,7 @@ function getEmployees() {
         })
         .catch(error => {
 
-            console.error("Error getting employees:", error);
+            console.error("Error med at få medarbejdere:", error);
 
         });
 }
@@ -200,7 +200,7 @@ function addEmployee(event) {
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Could not create employee");
+                throw new Error("Kunne ikke oprette medarbejder");
             }
 
             return response.json();
@@ -215,7 +215,7 @@ function addEmployee(event) {
         })
         .catch(error => {
 
-            console.error("Error creating employee:", error);
+            console.error("Error med at oprette medarbejder:", error);
 
         });
 }
@@ -239,7 +239,7 @@ function updateEmployee(id, employee) {
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Could not update employee");
+                throw new Error("Kunne ikke redigere medarbejder");
             }
 
             return response.json();
@@ -254,7 +254,7 @@ function updateEmployee(id, employee) {
         })
         .catch(error => {
 
-            console.error("Error updating employee:", error);
+            console.error("Error med at redigere medarbejder:", error);
 
         });
 }
@@ -272,7 +272,7 @@ function deleteEmployee(id) {
         .then(response => {
 
             if (!response.ok) {
-                throw new Error("Could not delete employee");
+                throw new Error("Kunne ikke slette medarbejder");
             }
 
 
@@ -288,7 +288,7 @@ function deleteEmployee(id) {
         })
         .catch(error => {
 
-            console.error("Error deleting employee:", error);
+            console.error("Error med at slette medarbejder:", error);
 
         });
 }
@@ -302,9 +302,9 @@ function resetEmployeeForm() {
 
     employeeForm.reset();
 
-    employeeFormTitle.textContent = "Add Employee";
+    employeeFormTitle.textContent = "Opret medarbejder";
 
-    submitEmployeeButton.textContent = "Add New Employee";
+    submitEmployeeButton.textContent = "Opret ny medarbejder";
 
     cancelEditButton.hidden = true;
 
