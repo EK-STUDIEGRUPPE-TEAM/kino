@@ -94,7 +94,7 @@ function getShowings() {
                     document.createElement("button");
 
                 editButton.type = "button";
-                editButton.textContent = "Redigér";
+                editButton.textContent = "Rediger";
                 editButton.className = "edit-button";
 
                 editButton.addEventListener(

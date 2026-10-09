@@ -314,15 +314,15 @@ function formatTime(dateTime) {
 function formatEmployeeType(type) {
 
     if (type === "SALES") {
-        return "Sales";
+        return "Salg";
     }
 
     if (type === "MOVIE_OPERATOR") {
-        return "Movie Operator";
+        return "Film operatør";
     }
 
     if (type === "TICKET_INSPECTOR") {
-        return "Ticket Inspector";
+        return "Billet kontrollør";
     }
 
     return type;
