@@ -317,6 +317,35 @@ button {
 }
 
 
+/* ---------- Showing Button ---------- */
+
+.showing-button {
+    margin-right: 6px;
+
+    padding: 6px 12px;
+
+    background-color: white;
+    color: #28c630;
+
+    border: 1px solid #bfe6c2;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.showing-button:hover {
+    background-color: #f0fff1;
+    border-color: #28c630;
+}
+
+
 /* ---------- Edit Button ---------- */
 
 .edit-button {
