@@ -1,3 +1,4 @@
+
 const showingSelect = document.getElementById("showing");
 const seatMap = document.getElementById("seat-map");
 const selectedSeatsText = document.getElementById("selected-seats");
@@ -10,6 +11,8 @@ const selectedShowingId = params.get("showingId");
 let selectedSeats = [];
 
 
+/* ---------- Date Formatting ---------- */
+
 function formatDateTime(dateTime) {
     return new Date(dateTime).toLocaleString("da-DK", {
         dateStyle: "medium",
@@ -18,26 +21,27 @@ function formatDateTime(dateTime) {
 }
 
 
+/* ---------- Messages ---------- */
+
 function showMessage(text, isError) {
-    reservationMessage.className =
-        isError ? "message error" : "message success";
+    reservationMessage.className = isError
+        ? "message error"
+        : "message success";
 
     reservationMessage.textContent = text;
 }
 
 
+/* ---------- Selected Seats ---------- */
+
 function updateSelectedSeatsText() {
-
     if (selectedSeats.length === 0) {
-        selectedSeatsText.textContent =
-            "Valgte sæder: ingen";
-
+        selectedSeatsText.textContent = "Valgte sæder: ingen";
         return;
     }
 
     const names = selectedSeats.map(
-        seat =>
-            `Række ${seat.rowNumber}, sæde ${seat.seatNumber}`
+        seat => `Række ${seat.rowNumber}, sæde ${seat.seatNumber}`
     );
 
     selectedSeatsText.textContent =
@@ -45,433 +49,311 @@ function updateSelectedSeatsText() {
 }
 
 
+/* ---------- Get Showings ---------- */
+
 function getShowings() {
-
     fetch("/api/showings")
-
-        .then(response =>
-            response.json()
-        )
-
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Kunne ikke hente forestillinger");
+            }
+            return response.json();
+        })
         .then(showings => {
-
             if (showings.length === 0) {
-
                 showingSelect.innerHTML =
-                    `<option value="">
-                        Der er ingen forestillinger
-                    </option>`;
-
+                    '<option value="">Der er ingen forestillinger</option>';
                 return;
             }
 
-
             showingSelect.innerHTML =
-                `<option value="">
-                    Vælg forestilling
-                </option>`;
-
+                '<option value="">Vælg forestilling</option>';
 
             showings.forEach(showing => {
+                const option = document.createElement("option");
 
-                const option =
-                    document.createElement("option");
-
-                option.value =
-                    showing.id;
-
+                option.value = showing.id;
                 option.textContent =
-                    `${showing.movie.title} – ${showing.theatre.name}, ${formatDateTime(showing.dateTime)}`;
+                    `${showing.movie.title} – ${showing.theatre.name}, ` +
+                    formatDateTime(showing.dateTime);
 
                 showingSelect.appendChild(option);
             });
 
-
             if (selectedShowingId) {
+                showingSelect.value = selectedShowingId;
 
-                showingSelect.value =
-                    selectedShowingId;
-
-                getSeats(selectedShowingId);
+                if (showingSelect.value === selectedShowingId) {
+                    getSeats(selectedShowingId);
+                }
             }
         })
-
         .catch(error => {
-
-            console.error(
-                "Fejl ved hentning af forestillinger:",
-                error
-            );
+            console.error("Fejl ved hentning af forestillinger:", error);
 
             showingSelect.innerHTML =
-                `<option value="">
-                    Kunne ikke hente forestillinger
-                </option>`;
+                '<option value="">Kunne ikke hente forestillinger</option>';
         });
 }
 
 
+/* ---------- Get Seats ---------- */
+
 function getSeats(showingId) {
-
     selectedSeats = [];
-
     updateSelectedSeatsText();
-
+    reservationMessage.textContent = "";
 
     if (!showingId) {
-
         seatMap.innerHTML =
-            `<p class="empty-message">
-                Vælg en forestilling først.
-            </p>`;
-
+            '<p class="empty-message">Vælg en forestilling først.</p>';
         return;
     }
 
-
-    // Hent alle sæder i salen og de sæder, der allerede er reserveret
     Promise.all([
+        fetch(`/api/showings/${showingId}`).then(response => {
+            if (!response.ok) {
+                throw new Error("Kunne ikke hente forestillingen");
+            }
+            return response.json();
+        }),
 
-        fetch(
-            `/api/seats?showingId=${showingId}`
-        ).then(
-            response => response.json()
-        ),
+        fetch(`/api/seats?showingId=${showingId}`).then(response => {
+            if (!response.ok) {
+                throw new Error("Kunne ikke hente sæder");
+            }
+            return response.json();
+        }),
 
-        fetch(
-            `/api/seats/reserved?showingId=${showingId}`
-        ).then(
-            response => response.json()
-        )
-
+        fetch(`/api/seats/reserved?showingId=${showingId}`).then(response => {
+            if (!response.ok) {
+                throw new Error("Kunne ikke hente reservationer");
+            }
+            return response.json();
+        })
     ])
-
-        .then(([seats, reservedSeats]) => {
-
+        .then(([showing, seats, reservedSeats]) => {
             seatMap.innerHTML = "";
 
+            const theatre = showing.theatre;
+            const numberOfRows = Number(theatre.numberOfRows);
+            const seatsPerRow = Number(theatre.seatsPerRow);
 
-            if (seats.length === 0) {
-
+            if (!numberOfRows || !seatsPerRow || seats.length === 0) {
                 seatMap.innerHTML =
-                    `<p class="empty-message">
-                        Der er ingen sæder i denne sal.
-                    </p>`;
-
+                    '<p class="empty-message">Der er ingen sæder i denne sal.</p>';
                 return;
             }
 
-
-            const reservedSeatIds =
-                reservedSeats.map(
-                    seat => seat.id
-                );
-
-
-            const screen =
-                document.createElement("div");
-
-            screen.className =
-                "screen";
-
-            screen.textContent =
-                "LÆRRED";
-
-            seatMap.appendChild(screen);
-
-
-            // Grupper sæderne i rækker
-            const rows = {};
-
-
-            seats.forEach(seat => {
-
-                if (!rows[seat.rowNumber]) {
-                    rows[seat.rowNumber] = [];
-                }
-
-                rows[seat.rowNumber]
-                    .push(seat);
-            });
-
-
-            Object.keys(rows)
-                .forEach(rowNumber => {
-
-                    const rowElement =
-                        document.createElement("div");
-
-                    rowElement.className =
-                        "seat-row";
-
-
-                    const label =
-                        document.createElement("span");
-
-                    label.className =
-                        "row-label";
-
-                    label.textContent =
-                        rowNumber;
-
-                    rowElement.appendChild(label);
-
-
-                    rows[rowNumber]
-                        .forEach(seat => {
-
-                            const seatButton =
-                                document.createElement("button");
-
-                            seatButton.type =
-                                "button";
-
-                            seatButton.className =
-                                "seat";
-
-                            seatButton.textContent =
-                                seat.seatNumber;
-
-                            seatButton.title =
-                                `Række ${seat.rowNumber}, sæde ${seat.seatNumber}`;
-
-
-                            if (
-                                reservedSeatIds.includes(
-                                    seat.id
-                                )
-                            ) {
-
-                                seatButton.classList.add(
-                                    "reserved"
-                                );
-
-                                seatButton.disabled = true;
-                            }
-
-
-                            seatButton.addEventListener(
-                                "click",
-                                () => {
-
-                                    const index =
-                                        selectedSeats.findIndex(
-                                            selectedSeat =>
-                                                selectedSeat.id === seat.id
-                                        );
-
-
-                                    if (index === -1) {
-
-                                        selectedSeats.push(
-                                            seat
-                                        );
-
-                                        seatButton.classList.add(
-                                            "selected"
-                                        );
-
-                                    } else {
-
-                                        selectedSeats.splice(
-                                            index,
-                                            1
-                                        );
-
-                                        seatButton.classList.remove(
-                                            "selected"
-                                        );
-                                    }
-
-
-                                    updateSelectedSeatsText();
-                                }
-                            );
-
-
-                            rowElement.appendChild(
-                                seatButton
-                            );
-                        });
-
-
-                    seatMap.appendChild(
-                        rowElement
-                    );
-                });
-        })
-
-        .catch(error => {
-
-            console.error(
-                "Fejl ved hentning af sæder:",
-                error
+            // Sæde-ID'er, der allerede er reserveret eller solgt.
+            const reservedSeatIds = new Set(
+                reservedSeats.map(seat => Number(seat.id))
             );
 
+            // Find hvert sæde ud fra række og sædenummer.
+            const seatsByPosition = new Map();
+
+            seats.forEach(seat => {
+                seatsByPosition.set(
+                    `${seat.rowNumber}-${seat.seatNumber}`,
+                    seat
+                );
+            });
+
+            /*
+             * Samme grid-struktur som showing-theatre:
+             * Første kolonne er rækkebogstavet.
+             * Resten af kolonnerne er sæderne.
+             */
+            seatMap.style.display = "grid";
+            seatMap.style.gridTemplateColumns =
+                `40px repeat(${theatre.seatsPerRow}, 45px)`;
+            seatMap.style.gridAutoFlow = "row";
+            seatMap.style.gridAutoRows = "auto";
+            seatMap.style.columnGap = "5px";
+            seatMap.style.rowGap = "8px";
+            seatMap.style.justifyContent = "center";
+            seatMap.style.alignItems = "center";
+            seatMap.style.width = "max-content";
+            seatMap.style.maxWidth = "none";
+            seatMap.style.margin = "0 auto";
+
+            for (let row = 1; row <= numberOfRows; row++) {
+                // Opret rækkebogstav: A, B, C osv.
+                const rowLabel = document.createElement("div");
+                rowLabel.className = "row-label";
+                rowLabel.textContent = String.fromCharCode(64 + row);
+
+                seatMap.appendChild(rowLabel);
+
+                for (
+                    let seatNumber = 1;
+                    seatNumber <= seatsPerRow;
+                    seatNumber++
+                ) {
+                    const seat = seatsByPosition.get(
+                        `${row}-${seatNumber}`
+                    );
+
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "seat-wrapper";
+
+                    // Bevar pladsen, hvis et sæde mangler.
+                    if (!seat) {
+                        seatMap.appendChild(wrapper);
+                        continue;
+                    }
+
+                    // Selve sædet.
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "seat";
+                    button.title =
+                        `Række ${rowLabel.textContent}, sæde ${seatNumber}`;
+
+                    button.setAttribute(
+                        "aria-label",
+                        `Række ${rowLabel.textContent}, sæde ${seatNumber}`
+                    );
+
+                    // Sædenummer under sædet.
+                    const numberLabel = document.createElement("span");
+                    numberLabel.className = "seat-number";
+                    numberLabel.textContent = seatNumber;
+
+                    if (reservedSeatIds.has(Number(seat.id))) {
+                        button.classList.add("reserved");
+                        button.disabled = true;
+                    } else {
+                        button.classList.add("available");
+
+                        button.addEventListener("click", () => {
+                            const index = selectedSeats.findIndex(
+                                selected =>
+                                    Number(selected.id) === Number(seat.id)
+                            );
+
+                            if (index === -1) {
+                                selectedSeats.push(seat);
+
+                                button.classList.replace(
+                                    "available",
+                                    "selected"
+                                );
+                            } else {
+                                selectedSeats.splice(index, 1);
+
+                                button.classList.replace(
+                                    "selected",
+                                    "available"
+                                );
+                            }
+
+                            updateSelectedSeatsText();
+                        });
+                    }
+
+                    wrapper.appendChild(button);
+                    wrapper.appendChild(numberLabel);
+                    seatMap.appendChild(wrapper);
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Fejl ved hentning af sæder:", error);
+
             seatMap.innerHTML =
-                `<p class="empty-message">
-                    Kunne ikke hente sæder.
-                </p>`;
+                '<p class="empty-message">Kunne ikke hente sæder.</p>';
         });
 }
 
 
-showingSelect.addEventListener(
-    "change",
-    function () {
+/* ---------- Change Showing ---------- */
 
-        reservationMessage.textContent = "";
+showingSelect.addEventListener("change", function () {
+    getSeats(showingSelect.value);
+});
 
-        getSeats(
-            showingSelect.value
-        );
+
+/* ---------- Create Reservation ---------- */
+
+reservationForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (!showingSelect.value) {
+        showMessage("Vælg en forestilling.", true);
+        return;
     }
-);
 
+    if (selectedSeats.length === 0) {
+        showMessage("Vælg mindst ét sæde.", true);
+        return;
+    }
 
-reservationForm.addEventListener(
-    "submit",
-    function (event) {
-
-        event.preventDefault();
-
-
-        if (selectedSeats.length === 0) {
-
-            showMessage(
-                "Vælg mindst ét sæde.",
-                true
-            );
-
-            return;
+    const reservation = {
+        customerName: document.getElementById("customerName").value,
+        phone: document.getElementById("phone").value,
+        showing: {
+            id: Number(showingSelect.value)
         }
+    };
 
+    const seatIds = selectedSeats
+        .map(seat => seat.id)
+        .join(",");
 
-        const reservation = {
+    fetch(`/api/reservations?seatIds=${seatIds}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reservation)
+    })
+        .then(async response => {
+            const data = await response.json();
 
-            customerName:
-            document
-                .getElementById(
-                    "customerName"
-                )
-                .value,
-
-            phone:
-            document
-                .getElementById(
-                    "phone"
-                )
-                .value,
-
-            showing: {
-                id: Number(
-                    showingSelect.value
-                )
-            }
-        };
-
-
-        const seatIds =
-            selectedSeats
-                .map(
-                    seat => seat.id
-                )
-                .join(",");
-
-
-        fetch(
-            `/api/reservations?seatIds=${seatIds}`,
-            {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body:
-                    JSON.stringify(
-                        reservation
-                    )
-            }
-        )
-
-            .then(
-                response =>
-                    response
-                        .json()
-                        .then(
-                            data => ({
-                                ok: response.ok,
-                                data: data
-                            })
-                        )
-            )
-
-            .then(({ok, data}) => {
-
-                if (!ok) {
-
-                    showMessage(
-                        data.message
-                        || "Reservationen kunne ikke oprettes.",
-                        true
-                    );
-
-                    getSeats(
-                        showingSelect.value
-                    );
-
-                    return;
-                }
-
-
-                const seatNames =
-                    selectedSeats.map(
-                        seat =>
-                            `Række ${seat.rowNumber}, sæde ${seat.seatNumber}`
-                    );
-
-
+            return {
+                ok: response.ok,
+                data: data
+            };
+        })
+        .then(({ ok, data }) => {
+            if (!ok) {
                 showMessage(
-                    `Reservation oprettet for ${data.customerName}: ${data.showing.movie.title}, ${seatNames.join(" · ")}`,
-                    false
-                );
-
-
-                document
-                    .getElementById(
-                        "customerName"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "phone"
-                    )
-                    .value = "";
-
-
-                getSeats(
-                    showingSelect.value
-                );
-            })
-
-            .catch(error => {
-
-                console.error(
-                    "Fejl ved oprettelse af reservation:",
-                    error
-                );
-
-                showMessage(
-                    "Reservationen kunne ikke oprettes.",
+                    data.message || "Reservationen kunne ikke oprettes.",
                     true
                 );
-            });
-    }
-);
 
+                getSeats(showingSelect.value);
+                return;
+            }
+
+            const seatNames = selectedSeats.map(
+                seat => `Række ${seat.rowNumber}, sæde ${seat.seatNumber}`
+            );
+
+            showMessage(
+                `Reservation oprettet for ${data.customerName}: ` +
+                `${data.showing.movie.title}, ${seatNames.join(" · ")}`,
+                false
+            );
+
+            document.getElementById("customerName").value = "";
+            document.getElementById("phone").value = "";
+
+            getSeats(showingSelect.value);
+        })
+        .catch(error => {
+            console.error("Fejl ved oprettelse af reservation:", error);
+
+            showMessage(
+                "Reservationen kunne ikke oprettes.",
+                true
+            );
+        });
+});
+
+
+/* ---------- Start ---------- */
 
 getShowings();

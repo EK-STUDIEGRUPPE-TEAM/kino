@@ -1,0 +1,563 @@
+/* ---------- General ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background-color: #f5f7fa;
+    color: #172033;
+}
+
+
+/* ---------- Layout ---------- */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+    width: 220px;
+    padding: 24px 16px;
+
+    background-color: #102534;
+    color: white;
+
+    flex-shrink: 0;
+}
+
+.logo {
+    margin-bottom: 35px;
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.logo span {
+    margin-left: 5px;
+
+    font-size: 12px;
+    font-weight: normal;
+
+    color: #cbd5df;
+}
+
+
+/* ---------- Navigation ---------- */
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.sidebar nav a {
+    padding: 12px 14px;
+
+    color: #dce4ea;
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    transition: background-color 0.2s;
+}
+
+.sidebar nav a:hover {
+    background-color: #1b394e;
+}
+
+.sidebar nav a.active {
+    background-color: #1d4566;
+    color: white;
+}
+
+
+/* ---------- Main Content ---------- */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+
+    padding: 32px;
+}
+
+
+/* ---------- Page Header ---------- */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.page-header p {
+    margin: 6px 0 0;
+
+    color: #6b7280;
+}
+
+
+/* ---------- Cinema Card ---------- */
+
+.cinema {
+    padding: 30px;
+
+    background-color: white;
+
+    border: 1px solid #dfe5eb;
+    border-radius: 8px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-x: auto;
+}
+
+
+/* ---------- Screen ---------- */
+
+.screen {
+    width: 55%;
+    min-width: 300px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 35px;
+
+    background-color: #102534;
+    color: white;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.back-button {
+    padding: 8px 14px;
+
+    background-color: white;
+    color: #1553c7;
+
+    border: 1px solid #b8cae8;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: #edf4ff;
+    border-color: #1553c7;
+}
+
+
+/* ---------- Seats ---------- */
+
+.seat-container {
+    display: grid;
+
+    gap: 8px 5px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.row-label {
+    font-size: 11px;
+    font-weight: bold;
+
+    color: #5b6574;
+
+    text-align: center;
+}
+
+.seat-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 2px;
+}
+
+.seat {
+    width: 24px;
+    height: 21px;
+
+    position: relative;
+
+    border-radius: 5px 5px 2px 2px;
+
+    cursor: pointer;
+
+    transition:
+            transform 0.15s,
+            background-color 0.15s;
+}
+
+
+/* ---------- Seat Back ---------- */
+
+.seat::before {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+    right: 3px;
+    top: 2px;
+
+    height: 9px;
+
+    border-radius: 3px;
+}
+
+
+/* ---------- Available ---------- */
+
+.seat.available {
+    background-color: #16c936;
+}
+
+.seat.available::before {
+    background-color: #25e044;
+}
+
+.seat.available:hover {
+    transform: scale(1.1);
+
+    background-color: #1553c7;
+}
+
+.seat.available:hover::before {
+    background-color: #2563d9;
+}
+
+
+/* ---------- Reserved ---------- */
+
+.seat.reserved {
+    background-color: white;
+
+    border: 2px solid #999;
+}
+
+.seat.reserved::before {
+    background-color: #eeeeee;
+}
+
+
+/* ---------- Sold ---------- */
+
+.seat.sold {
+    background-color: #ff1717;
+}
+
+.seat.sold::before {
+    background-color: #ff5555;
+}
+
+
+/* ---------- Selected ---------- */
+
+.seat.selected {
+    background-color: #1553c7;
+}
+
+.seat.selected::before {
+    background-color: #2563d9;
+}
+
+
+/* ---------- Seat Number ---------- */
+
+.seat-number {
+    font-size: 9px;
+
+    color: #5b6574;
+}
+
+
+/* ---------- Legend ---------- */
+
+.seat-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-top: 30px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 12px;
+
+    color: #5b6574;
+}
+
+.legend-seat {
+    width: 20px;
+    height: 17px;
+
+    position: relative;
+
+    border-radius: 4px 4px 2px 2px;
+}
+
+.legend-seat.available {
+    background-color: #16c936;
+}
+
+.legend-seat.reserved {
+    background-color: white;
+
+    border: 2px solid #999;
+}
+
+.legend-seat.sold {
+    background-color: #ff1717;
+}
+
+.legend-seat.selected {
+    background-color: #1553c7;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .screen {
+        width: 80%;
+        min-width: 200px;
+    }
+
+    .seat-legend {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* ---------- Customer Information ---------- */
+
+#reservation-form .form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+#reservation-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+#reservation-form .form-group label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #172033;
+}
+
+#reservation-form .form-group input {
+    width: 100%;
+    max-width: none;
+    min-height: 42px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #172033;
+    background-color: white;
+    border: 1px solid #cfd7df;
+    border-radius: 6px;
+}
+
+#reservation-form .form-group input:focus {
+    outline: none;
+    border-color: #1553c7;
+    box-shadow: 0 0 0 3px rgba(21, 83, 199, 0.12);
+}
+
+/* Opret reservation-knappen */
+
+#reservation-form .primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 20px;
+    background-color: #1553c7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#reservation-form .primary-button:hover {
+    background-color: #1044a7;
+}
+
+/* Mobilvisning */
+
+@media (max-width: 600px) {
+    #reservation-form .form-fields {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+
+/* ---------- Reservation Page Header ---------- */
+
+.page-header h1 {
+    font-size: 28px;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+/* ---------- Reservation Section Headings ---------- */
+
+.reservation-card h2 {
+    margin: 0 0 22px;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: #172033;
+}
+
+/* ---------- Showing Dropdown ---------- */
+
+#reservation-form .reservation-card > label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #172033;
+}
+
+#reservation-form #showing {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    min-height: 44px;
+    padding: 0 38px 0 12px;
+    background-color: white;
+    color: #172033;
+    border: 1px solid #cfd7df;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#reservation-form #showing:focus {
+    outline: none;
+    border-color: #1553c7;
+    box-shadow: 0 0 0 3px rgba(21, 83, 199, 0.10);
+}
+
+/* ---------- Reservation Cards ---------- */
+
+.reservation-card {
+    margin-bottom: 22px;
+    padding: 24px;
+    background-color: white;
+    border: 1px solid #dfe5eb;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 600px) {
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .page-header p {
+        font-size: 14px;
+    }
+
+    .reservation-card {
+        padding: 18px;
+    }
+
+    .reservation-card h2 {
+        font-size: 18px;
+    }
+
+    #reservation-form #showing {
+        max-width: 100%;
+    }
+}
