@@ -7,40 +7,79 @@
 </head>
 <body>
 
-<h1>Kino</h1>
-<nav>
-    <a href="index.html">Forside</a>
-    <a href="#">Dashboard</a>
-    <a href="movies.html" class="active">Film</a>
-    <a href="upcoming-showings.html">Forestillinger</a>
-    <a href="reservations.html">Reservationer</a>
-    <a href="theatre.html">Sale</a>
-    <a href="employees.html">Medarbejdere</a>
-</nav>
-<a href="opret-reservation.html">Opret reservation</a>
+<div class="admin-layout">
 
-<h2>Opret reservation</h2>
+    <aside class="sidebar">
 
-<form id="reservation-form">
-    <label for="showing">1. Vælg film og forestilling</label>
-    <select id="showing" required>
-        <option value="">Henter forestillinger...</option>
-    </select>
+        <div class="logo">
+            KINO
+            <span>Admin</span>
+        </div>
 
-    <p>2. Vælg sæde(r)</p>
-    <div id="seat-map"><p class="empty-message">Vælg en forestilling først.</p></div>
-    <p id="selected-seats">Valgte sæder: ingen</p>
+        <nav>
+            <a href="index.html">Forside</a>
+            <a href="#">Dashboard</a>
+            <a href="movies.html">Film</a>
+            <a href="upcoming-showings.html">Forestillinger</a>
+            <a href="reservations.html" class="active">Reservationer</a>
+            <a href="theatre.html">Sale</a>
+            <a href="employees.html">Medarbejdere</a>
+        </nav>
 
-    <p>3. Dine oplysninger</p>
-    <input id="customerName" type="text" placeholder="Navn" required>
-    <input id="phone" type="tel" placeholder="Telefonnummer" required>
+    </aside>
 
-    <button type="submit">Opret reservation</button>
-</form>
 
-<div id="reservation-message"></div>
+    <main class="main-content">
 
-<script src="../js/opret-reservation.js"></script>
+        <div class="page-header">
+            <div>
+                <h1>Opret reservation</h1>
+                <p>Vælg forestilling, sæder og kundens oplysninger</p>
+            </div>
+            <a href="reservations.html" class="secondary-button">Tilbage til reservationer</a>
+        </div>
 
+        <form id="reservation-form">
+
+            <section class="reservation-card">
+                <h2>1. Vælg film og forestilling</h2>
+                <select id="showing" required>
+                    <option value="">Henter forestillinger...</option>
+                </select>
+            </section>
+
+            <section class="reservation-card">
+                <h2>2. Vælg sæde(r)</h2>
+                <div id="seat-map"><p class="empty-message">Vælg en forestilling først.</p></div>
+                <p id="selected-seats">Valgte sæder: ingen</p>
+            </section>
+
+            <section class="reservation-card">
+                <h2>3. Kundens oplysninger</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerName">Navn</label>
+                        <input id="customerName" type="text" placeholder="Navn" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefonnummer</label>
+                        <input id="phone" type="tel" placeholder="Telefonnummer" required>
+                    </div>
+
+                    <button type="submit" class="primary-button">Opret reservation</button>
+                </div>
+            </section>
+
+        </form>
+
+        <div id="reservation-message"></div>
+
+    </main>
+
+</div>
+
+<script src="/js/opret-reservation.js"></script>
 </body>
 </html>

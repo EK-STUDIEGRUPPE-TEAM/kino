@@ -1,35 +1,365 @@
+/* ---------- General ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
+    margin: 0;
+
     font-family: Arial, sans-serif;
-    margin: 40px;
+
+    background-color: #f5f7fa;
+    color: #172033;
+}
+
+
+/* ---------- Layout ---------- */
+
+.admin-layout {
+    display: flex;
+
+    min-height: 100vh;
+}
+
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+    width: 220px;
+
+    padding: 24px 16px;
+
+    background-color: #102534;
+    color: white;
+}
+
+.logo {
+    margin-bottom: 35px;
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.logo span {
+    margin-left: 5px;
+
+    font-size: 12px;
+    font-weight: normal;
+
+    color: #cbd5df;
+}
+
+
+/* ---------- Navigation ---------- */
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.sidebar nav a {
+    padding: 12px 14px;
+
+    color: #dce4ea;
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    transition: background-color 0.2s;
+}
+
+.sidebar nav a:hover {
+    background-color: #1b394e;
+}
+
+.sidebar nav a.active {
+    background-color: #1d4566;
+    color: white;
+}
+
+
+/* ---------- Main Content ---------- */
+
+.main-content {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 32px;
+}
+
+
+/* ---------- Page Header ---------- */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.page-header p {
+    margin-top: 6px;
+    margin-bottom: 0;
+
+    color: #6b7280;
+}
+
+
+/* ---------- Buttons ---------- */
+
+button {
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+}
+
+/* Bruges både på <button> og på links (<a>), der skal ligne knapper */
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+
+    height: 40px;
+
+    padding: 0 18px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.primary-button {
+    background-color: #1553c7;
+    color: white;
+
+    border: none;
+}
+
+.primary-button:hover {
+    background-color: #1044a7;
+}
+
+.secondary-button {
+    background-color: white;
+    color: #374151;
+
+    border: 1px solid #cfd7df;
+}
+
+.secondary-button:hover {
+    background-color: #f3f4f6;
+    border-color: #aeb8c2;
+}
+
+
+/* ---------- Cards ---------- */
+
+.reservation-card,
+#reservation-list .reservation {
+    margin-bottom: 24px;
+
+    padding: 24px;
+
+    background-color: white;
+
+    border: 1px solid #dfe5eb;
+    border-radius: 8px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+    overflow-x: auto;
+}
+
+.reservation-card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+
+    font-size: 18px;
+}
+
+
+/* ---------- Reservation List ---------- */
+
+#reservation-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    gap: 16px;
 }
 
 #reservation-list .reservation {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
+
+#reservation-list .empty-message {
+    grid-column: 1 / -1;
+}
+
+#reservation-list .reservation h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+
+    font-size: 18px;
+}
+
+#reservation-list .reservation p {
+    margin: 6px 0;
+
+    font-size: 14px;
+
+    color: #374151;
+}
+
+#reservation-list .reservation ul {
+    margin: 6px 0 16px;
+    padding-left: 20px;
+
+    font-size: 14px;
+}
+
+
+/* ---------- Cancel Button ---------- */
+
+.cancel-button {
+    padding: 6px 12px;
+
+    background-color: white;
+    color: #c62828;
+
+    border: 1px solid #edcaca;
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.cancel-button:hover {
+    background-color: #fff1f1;
+
+    border-color: #c62828;
+}
+
+
+/* ---------- Empty Message ---------- */
 
 .empty-message {
-    padding: 15px;
-    background-color: #f5f5f5;
-    border: 1px dashed #999;
-    font-style: italic;
+    padding: 30px;
+
+    text-align: center;
+
+    color: #7b8491;
+
+    background-color: white;
+
+    border: 1px dashed #cfd7df;
+    border-radius: 8px;
 }
 
-#reservation-form select,
-#reservation-form input {
-    display: block;
-    margin: 6px 0 12px;
-    padding: 6px;
+
+/* ---------- Form ---------- */
+
+.form-row {
+    display: flex;
+    align-items: end;
+
+    gap: 16px;
+
+    flex-wrap: wrap;
 }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#reservation-form input,
+#reservation-form select {
+    width: 260px;
+    height: 40px;
+
+    padding: 0 12px;
+
+    background-color: white;
+
+    border: 1px solid #cfd7df;
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    transition:
+            border-color 0.2s,
+            box-shadow 0.2s;
+}
+
+#reservation-form select {
+    width: 420px;
+    max-width: 100%;
+}
+
+#reservation-form input:focus,
+#reservation-form select:focus {
+    outline: none;
+
+    border-color: #2563d9;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 217, 0.10);
+}
+
+#selected-seats {
+    margin-bottom: 0;
+
+    font-size: 14px;
+
+    color: #374151;
+}
+
+
+/* ---------- Seat Map ---------- */
 
 .screen {
     width: 420px;
     max-width: 100%;
-    margin-bottom: 15px;
-    padding: 4px;
+
+    margin-bottom: 16px;
+    padding: 6px;
+
     text-align: center;
-    background-color: #ddd;
+
+    background-color: #e5eaf0;
+    color: #5b6574;
+
+    border-radius: 4px;
+
     font-size: 12px;
     letter-spacing: 4px;
 }
@@ -37,58 +367,115 @@ body {
 .seat-row {
     display: flex;
     align-items: center;
+
     gap: 4px;
+
     margin-bottom: 4px;
 }
 
 .row-label {
     width: 20px;
+
     font-size: 12px;
-    color: #666;
+
+    color: #7b8491;
 }
 
 .seat {
     width: 30px;
     height: 30px;
-    border: 1px solid #999;
+
+    background-color: white;
+
+    border: 1px solid #cfd7df;
     border-radius: 4px;
-    background-color: #fff;
+
     font-size: 11px;
-    cursor: pointer;
+
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.seat:not(.reserved):hover {
+    border-color: #1553c7;
 }
 
 .seat.selected {
-    background-color: #2e7d32;
-    border-color: #2e7d32;
-    color: #fff;
+    background-color: #1553c7;
+    color: white;
+
+    border-color: #1553c7;
 }
 
 .seat.reserved {
-    background-color: #ccc;
-    color: #888;
+    background-color: #e5e7eb;
+    color: #9ca3af;
+
+    border-color: #e5e7eb;
+
     cursor: not-allowed;
 }
 
+
+/* ---------- Messages ---------- */
+
 .message {
-    margin-top: 15px;
     padding: 15px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
 }
 
 .message.success {
     background-color: #e8f5e9;
+
     border: 1px solid #2e7d32;
 }
 
 .message.error {
     background-color: #ffebee;
+
     border: 1px solid #c62828;
 }
 
-.cancel-button {
-    padding: 6px 12px;
-    background-color: #c62828;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .form-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #reservation-form input,
+    #reservation-form select {
+        width: 100%;
+    }
 }
